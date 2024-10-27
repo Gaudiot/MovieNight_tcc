@@ -8,9 +8,15 @@ environment:
 
 dependencies:
   cached_network_image: ^3.4.1
+  dio: ^5.7.0
+  dropdown_button2: ^2.3.9
   flutter:
     sdk: flutter
+  flutter_dotenv: ^5.1.0
   flutter_svg: ^2.0.10+1
+  get_it: ^8.0.0
+  json_annotation: ^4.9.0
+  json_serializable: ^6.8.0
   shared_preferences: ^2.3.2
 
 dev_dependencies:
@@ -25,6 +31,7 @@ flutter:
 
   assets:
     - lib/assets/
+    - .env
 
 flutter_gen:
   outputs: lib/gen/
