@@ -1,4 +1,4 @@
-import "package:movie_night_tcc/src/base/enums/movie_collections.enum.dart";
+import "package:movie_night_tcc/src/base/enums/storage_collections.enum.dart";
 import "package:movie_night_tcc/src/core/local_storage/ilocal_storage.dart";
 import "package:movie_night_tcc/src/core/local_storage/local_storage_exception.dart";
 import "package:movie_night_tcc/src/core/locator.dart";
@@ -9,7 +9,7 @@ class MovieStorage {
   final ILocalStorage _localStorage = locator.get<ILocalStorage>();
   final String _collectionName;
 
-  MovieStorage({required MovieCollections movieCollection})
+  MovieStorage({required StorageCollections movieCollection})
       : _collectionName = movieCollection.collectionName;
 
   Future<Result<MovieModel?, LocalStorageException>> get({

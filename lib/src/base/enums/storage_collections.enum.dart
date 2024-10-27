@@ -1,8 +1,8 @@
-enum MovieCollections {
+enum StorageCollections {
   watched(collectionName: "watched"),
   watchlist(collectionName: "watchlist");
 
   final String collectionName;
 
-  const MovieCollections({required this.collectionName});
+  const StorageCollections({required this.collectionName});
 }

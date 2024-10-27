@@ -1,4 +1,4 @@
-import "package:movie_night_tcc/src/base/enums/movie_collections.enum.dart";
+import "package:movie_night_tcc/src/base/enums/storage_collections.enum.dart";
 import "package:movie_night_tcc/src/lib_mvvm/model/movie.model.dart";
 import "package:movie_night_tcc/src/lib_mvvm/model/movie.storage.dart";
 import "package:movie_night_tcc/src/lib_mvvm/model/search_movie.model.dart";
@@ -8,9 +8,9 @@ class SearchMovieTransformer {
     List<MovieModel> movies,
   ) async {
     final watchedStorage =
-        MovieStorage(movieCollection: MovieCollections.watched);
+        MovieStorage(movieCollection: StorageCollections.watched);
     final watchlistStorage =
-        MovieStorage(movieCollection: MovieCollections.watchlist);
+        MovieStorage(movieCollection: StorageCollections.watchlist);
 
     final watchedMovies = await watchedStorage.getAll();
     final watchlistMovies = await watchlistStorage.getAll();
