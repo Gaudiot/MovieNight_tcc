@@ -1,14 +1,20 @@
-import 'package:flutter/material.dart';
-import 'package:movie_night_tcc/lib_feature/main_feature.dart';
-import 'package:movie_night_tcc/lib_mvc/main_mvc.dart';
+import "package:flutter/material.dart";
+import "package:movie_night_tcc/src/core/app_envs.dart";
+import "package:movie_night_tcc/src/core/local_storage/ilocal_storage.dart";
+import "package:movie_night_tcc/src/core/locator.dart";
+import "package:movie_night_tcc/src/lib_feature/main_feature.dart";
+import "package:movie_night_tcc/src/lib_mvvm/main_mvvm.dart";
 
-void main() {
+void main() async {
+  setupLocator();
+  await AppEnvs.init();
+  await locator.get<ILocalStorage>().init();
   runApp(const MainApp());
 }
 
 enum AppType {
   featureBased,
-  mvcDefault,
+  mvvmDefault,
 }
 
 class MainApp extends StatelessWidget {
@@ -16,14 +22,15 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const appType = AppType.featureBased;
-
+    const appType = AppType.mvvmDefault;
     return MaterialApp(
       home: Scaffold(
-        body: switch (appType) {
-          AppType.featureBased => const MainFeatureBased(),
-          AppType.mvcDefault => const MainMvcDefault(),
-        },
+        body: SafeArea(
+          child: switch (appType) {
+            AppType.featureBased => const MainFeatureBased(),
+            AppType.mvvmDefault => const MainMvvmDefault(),
+          },
+        ),
       ),
     );
   }
