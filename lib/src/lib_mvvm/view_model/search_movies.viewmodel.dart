@@ -1,75 +1,76 @@
 import "package:movie_night_tcc/src/base/base_view_model.dart";
+import "package:movie_night_tcc/src/base/enums/movie_collections.enum.dart";
 import "package:movie_night_tcc/src/base/enums/movie_genre.enum.dart";
-import "package:movie_night_tcc/src/core/local_storage/ilocal_storage.dart";
-import "package:movie_night_tcc/src/core/locator.dart";
 import "package:movie_night_tcc/src/lib_mvvm/model/movie.api.dart";
 import "package:movie_night_tcc/src/lib_mvvm/model/movie.model.dart";
+import "package:movie_night_tcc/src/lib_mvvm/model/movie.storage.dart";
 import "package:movie_night_tcc/src/lib_mvvm/model/search_movie.model.dart";
 import "package:movie_night_tcc/src/lib_mvvm/model/search_movie.transformer.dart";
+import "package:movie_night_tcc/src/lib_mvvm/model/search_movie_state.model.dart";
 
 class SearchMoviesViewmodel extends BaseViewModel {
   final _movieNetwork = MovieApi();
-  final _localStorage = locator.get<ILocalStorage>();
+  final watchlistLocalStorage =
+      MovieStorage(movieCollection: MovieCollections.watchlist);
+  final watchedLocalStorage =
+      MovieStorage(movieCollection: MovieCollections.watched);
 
-  List<SearchMovieModel> movies = [];
-  int _currentPage = 1;
-  String queryTitle = "";
-  MovieGenre queryGenre = MovieGenre.unknown;
+  final SearchMovieStateModel _state = SearchMovieStateModel();
 
-  void onUpdateMovieGenre({required MovieGenre? movieGenre}) {
-    queryGenre = movieGenre ?? MovieGenre.unknown;
-    _currentPage = 1;
-    movies.clear();
+  List<SearchMovieModel> get movies => _state.movies;
+  String get queryTitle => _state.queryTitle;
+  MovieGenre get queryGenre => _state.queryGenre;
+  int get currentPage => _state.currentPage;
+
+  void onUpdateQueryGenre({required MovieGenre? movieGenre}) {
+    _state.updateQueryGenre = movieGenre ?? MovieGenre.unknown;
+    _state.clearMovies();
     fetchMovies();
   }
 
-  Future<void> updateQueryTitle({
+  Future<void> onUpdateQueryTitle({
     required String title,
   }) async {
-    queryTitle = title;
-    _currentPage = 1;
-    movies.clear();
+    _state.updateQueryTitle = title;
+    _state.clearMovies();
     fetchMovies();
   }
 
   Future<void> onMovieWatchlist({
     required String movieId,
   }) async {
-    final movieIndex = movies.indexWhere((movie) => movie.movie.id == movieId);
+    final movieIndex =
+        _state.movies.indexWhere((movie) => movie.movie.id == movieId);
     if (movieIndex == -1) return;
 
-    final isSaved = await _localStorage.save<MovieModel>(
-      collection: LocalStorageCollectionEnum.watchlist.name,
-      key: movieId,
-      value: movies[movieIndex].movie,
+    final isSaved = await watchlistLocalStorage.save(
+      movie: _state.movies[movieIndex].movie,
     );
     if (isSaved.hasError || isSaved.data == false) return;
 
-    movies[movieIndex].isWatchlist = true;
+    _state.movies[movieIndex].isWatchlist = true;
     notifyListeners();
   }
 
   Future<void> onMovieWatched({
     required String movieId,
   }) async {
-    final movieIndex = movies.indexWhere((movie) => movie.movie.id == movieId);
+    final movieIndex =
+        _state.movies.indexWhere((movie) => movie.movie.id == movieId);
     if (movieIndex == -1) return;
 
-    final isDeleted = await _localStorage.delete(
-      collection: LocalStorageCollectionEnum.watchlist.name,
-      key: movieId,
+    final isDeleted = await watchlistLocalStorage.delete(
+      movieId: movieId,
     );
-    if (!isDeleted) return;
+    if (isDeleted.hasError || isDeleted.data == false) return;
 
-    final isSaved = await _localStorage.save<MovieModel>(
-      collection: LocalStorageCollectionEnum.watched.name,
-      key: movieId,
-      value: movies[movieIndex].movie,
+    final isSaved = await watchedLocalStorage.save(
+      movie: _state.movies[movieIndex].movie,
     );
     if (isSaved.hasError || isSaved.data == false) return;
 
-    movies[movieIndex].isWatchlist = false;
-    movies[movieIndex].isWatched = true;
+    _state.movies[movieIndex].isWatchlist = false;
+    _state.movies[movieIndex].isWatched = true;
     notifyListeners();
   }
 
@@ -79,21 +80,27 @@ class SearchMoviesViewmodel extends BaseViewModel {
     final List<int> movieIds;
     final List<MovieModel> movieModels = [];
 
-    if (queryTitle.isEmpty) {
+    if (_state.queryTitle.isEmpty) {
       final trendingMovies = await _movieNetwork.getTrendingMovies(
-        request: GetTrendingMoviesRequest(page: _currentPage),
+        request: GetTrendingMoviesRequest(page: _state.currentPage),
       );
-      if (trendingMovies.hasError) return;
+      if (trendingMovies.hasError) {
+        setIsLoading(isLoading: false);
+        return;
+      }
 
       movieIds = trendingMovies.data!.ids;
     } else {
       final searchMovies = await _movieNetwork.getMoviesByTitle(
         request: GetMoviesByTitleRequest(
-          title: queryTitle,
-          page: _currentPage,
+          title: _state.queryTitle,
+          page: _state.currentPage,
         ),
       );
-      if (searchMovies.hasError) return;
+      if (searchMovies.hasError) {
+        setIsLoading(isLoading: false);
+        return;
+      }
 
       movieIds = searchMovies.data!.ids;
     }
@@ -116,20 +123,19 @@ class SearchMoviesViewmodel extends BaseViewModel {
     }
     final moviesToAdd =
         await SearchMovieTransformer.fromMovieModels(movieModels);
-    movies.addAll(
-      moviesToAdd.where(
-        (movieToAdd) {
-          final includesGenre = queryGenre == MovieGenre.unknown ||
-              movieToAdd.movie.genres
-                  .map((genre) => genre.id)
-                  .contains(queryGenre.id);
+    final filteredMovies = moviesToAdd.where(
+      (movieToAdd) {
+        final includesGenre = _state.queryGenre == MovieGenre.unknown ||
+            movieToAdd.movie.genres
+                .map((genre) => genre.id)
+                .contains(_state.queryGenre.id);
 
-          return includesGenre;
-        },
-      ),
-    );
+        return includesGenre;
+      },
+    ).toList();
 
-    _currentPage++;
+    _state.addMovies(filteredMovies);
+    _state.updateCurrentPage = _state.currentPage + 1;
     setIsLoading(isLoading: false);
   }
 }

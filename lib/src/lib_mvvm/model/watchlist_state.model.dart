@@ -24,10 +24,6 @@ class WatchlistStateModel {
     );
   }
 
-  void addMovies(List<MovieModel> newMovies) {
-    movies.addAll(newMovies);
-  }
-
   set updateMovies(List<MovieModel> newMovies) {
     movies = newMovies;
   }

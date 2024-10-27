@@ -12,97 +12,133 @@ import "package:movie_night_tcc/src/shared/widgets/components/ui_dropdown.dart";
 import "package:movie_night_tcc/src/shared/widgets/components/ui_search_bar.dart";
 import "package:movie_night_tcc/src/shared/widgets/movie_poster.dart";
 
-class SearchMoviesView extends StatelessWidget {
+class SearchMoviesView extends StatefulWidget {
   final SearchMoviesViewmodel viewModel = SearchMoviesViewmodel();
 
   SearchMoviesView({super.key});
 
   @override
+  State<SearchMoviesView> createState() => _SearchMoviesViewState();
+}
+
+class _SearchMoviesViewState extends State<SearchMoviesView> {
+  @override
+  void initState() {
+    super.initState();
+    widget.viewModel.fetchMovies();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return ListenableBuilder(
-      listenable: viewModel,
+      listenable: widget.viewModel,
       builder: (context, _) {
-        if (viewModel.movies.isEmpty) {
-          viewModel.fetchMovies();
-        }
-
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Column(
             children: [
-              UISearchBar.delayed(
-                suffixEmptyIcon: const Icon(
-                  Icons.search,
-                  color: AppColors.white,
-                ),
-                suffixIcon: const Icon(
-                  Icons.close,
-                  color: AppColors.white,
-                ),
-                height: 40,
-                backgroundColor: AppColors.darkBlue,
-                onChanged: (value) => viewModel.updateQueryTitle(title: value),
-                hintText: AppStrings.searchMovies,
-                hintStyle: AppFonts.robotoTextSmallRegular.copyWith(
-                  color: AppColors.white.withOpacity(0.5),
-                ),
-                textStyle: AppFonts.robotoTextSmallRegular.copyWith(
-                  color: AppColors.white,
-                ),
-              ),
+              _SearchMoviesHeader(viewModel: widget.viewModel),
               const SizedBox(height: 12),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    (viewModel.queryTitle.isEmpty)
-                        ? AppStrings.trending
-                        : AppStrings.search,
-                    style: AppFonts.robotoTitleBigMedium,
-                  ),
-                  UIDropdownMovies(
-                    value: viewModel.queryGenre,
-                    onChanged: (genre) =>
-                        viewModel.onUpdateMovieGenre(movieGenre: genre),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 12),
-              if (viewModel.isLoading && viewModel.movies.isEmpty)
-                const Expanded(child: _LoadingMovieList())
-              else if (viewModel.movies.isEmpty)
-                const _EmptySearchMovies()
-              else
-                Expanded(
-                  child: ListView.separated(
-                    padding: const EdgeInsets.only(bottom: 60),
-                    itemCount: viewModel.movies.length,
-                    itemBuilder: (_, index) {
-                      if (index == viewModel.movies.length - 5) {
-                        viewModel.fetchMovies();
-                      }
-                      final movie = viewModel.movies[index].movie;
-
-                      return _MovieTile(
-                        searchMovie: viewModel.movies[index],
-                        onMovieWatchlist: () =>
-                            viewModel.onMovieWatchlist(movieId: movie.id),
-                        onMovieWatched: () =>
-                            viewModel.onMovieWatched(movieId: movie.id),
-                      );
-                    },
-                    separatorBuilder: (context, index) => const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 13),
-                      child: Divider(
-                        color: AppColors.gray,
-                      ),
-                    ),
-                  ),
-                ),
+              _SearchMoviesContent(viewModel: widget.viewModel),
             ],
           ),
         );
       },
+    );
+  }
+}
+
+class _SearchMoviesHeader extends StatelessWidget {
+  final SearchMoviesViewmodel viewModel;
+
+  const _SearchMoviesHeader({required this.viewModel});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        UISearchBar.delayed(
+          suffixEmptyIcon: const Icon(
+            Icons.search,
+            color: AppColors.white,
+          ),
+          suffixIcon: const Icon(
+            Icons.close,
+            color: AppColors.white,
+          ),
+          height: 40,
+          backgroundColor: AppColors.darkBlue,
+          onChanged: (value) => viewModel.onUpdateQueryTitle(title: value),
+          hintText: AppStrings.searchMovies,
+          hintStyle: AppFonts.robotoTextSmallRegular.copyWith(
+            color: AppColors.white.withOpacity(0.5),
+          ),
+          textStyle: AppFonts.robotoTextSmallRegular.copyWith(
+            color: AppColors.white,
+          ),
+        ),
+        const SizedBox(height: 12),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              (viewModel.queryTitle.isEmpty)
+                  ? AppStrings.trending
+                  : AppStrings.search,
+              style: AppFonts.robotoTitleBigMedium,
+            ),
+            UIDropdownMovies(
+              value: viewModel.queryGenre,
+              onChanged: (genre) =>
+                  viewModel.onUpdateQueryGenre(movieGenre: genre),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+}
+
+class _SearchMoviesContent extends StatelessWidget {
+  final SearchMoviesViewmodel viewModel;
+
+  const _SearchMoviesContent({required this.viewModel});
+
+  @override
+  Widget build(BuildContext context) {
+    if (viewModel.isLoading && viewModel.movies.isEmpty) {
+      return const Expanded(child: _LoadingMovieList());
+    }
+
+    if (viewModel.movies.isEmpty) {
+      return const _EmptySearchMovies();
+    }
+
+    return Expanded(
+      child: ListView.separated(
+        padding: const EdgeInsets.only(bottom: 60),
+        itemCount: viewModel.movies.length,
+        itemBuilder: (_, index) {
+          if (index == viewModel.movies.length - 5) {
+            viewModel.fetchMovies();
+          }
+          final searchMovie = viewModel.movies[index];
+
+          return _MovieTile(
+            searchMovie: searchMovie,
+            onMovieWatchlist: () =>
+                viewModel.onMovieWatchlist(movieId: searchMovie.movie.id),
+            onMovieWatched: () =>
+                viewModel.onMovieWatched(movieId: searchMovie.movie.id),
+          );
+        },
+        separatorBuilder: (context, index) => const Padding(
+          padding: EdgeInsets.symmetric(vertical: 13),
+          child: Divider(
+            color: AppColors.gray,
+          ),
+        ),
+      ),
     );
   }
 }
@@ -137,7 +173,6 @@ class _MovieTile extends StatelessWidget {
           ),
           const SizedBox(width: 20),
           Expanded(
-            // Adicionando Expanded para evitar overflow
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 8.0),
               child: Column(

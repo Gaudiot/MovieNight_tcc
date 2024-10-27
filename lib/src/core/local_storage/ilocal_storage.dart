@@ -45,14 +45,3 @@ abstract class ILocalStorageCollection {
     required String key,
   });
 }
-
-enum LocalStorageCollectionEnum {
-  watchlist(name: "watchlist"),
-  watched(name: "watched");
-
-  final String name;
-
-  const LocalStorageCollectionEnum({
-    required this.name,
-  });
-}
