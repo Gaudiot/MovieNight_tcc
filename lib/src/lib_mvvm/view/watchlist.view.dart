@@ -12,77 +12,34 @@ import "package:movie_night_tcc/src/shared/widgets/components/ui_dropdown.dart";
 import "package:movie_night_tcc/src/shared/widgets/components/ui_search_bar.dart";
 import "package:movie_night_tcc/src/shared/widgets/movie_poster.dart";
 
-class WatchlistView extends StatelessWidget {
-  final viewModel = WatchlistViewmodel();
+class WatchlistView extends StatefulWidget {
+  final WatchlistViewmodel viewModel = WatchlistViewmodel();
 
-  WatchlistView({
-    super.key,
-  });
+  WatchlistView({super.key});
+
+  @override
+  State<WatchlistView> createState() => _WatchlistViewState();
+}
+
+class _WatchlistViewState extends State<WatchlistView> {
+  @override
+  void initState() {
+    super.initState();
+    widget.viewModel.getMovies();
+  }
 
   @override
   Widget build(BuildContext context) {
-    bool firstLoad = true;
-
     return ListenableBuilder(
-      listenable: viewModel,
+      listenable: widget.viewModel,
       builder: (context, _) {
-        if (viewModel.movies.isEmpty && firstLoad) {
-          viewModel.getMovies();
-          firstLoad = false;
-        }
-
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Column(
             children: [
-              UISearchBar(
-                suffixEmptyIcon: const Icon(
-                  Icons.search,
-                  color: AppColors.white,
-                ),
-                suffixIcon: const Icon(
-                  Icons.close,
-                  color: AppColors.white,
-                ),
-                height: 40,
-                backgroundColor: AppColors.darkBlue,
-                onChanged: (value) {
-                  viewModel.onUpdateQueryTitle(title: value);
-                },
-                hintText: AppStrings.searchMovies,
-                hintStyle: AppFonts.robotoTextSmallRegular.copyWith(
-                  color: AppColors.white.withOpacity(0.5),
-                ),
-                textStyle: AppFonts.robotoTextSmallRegular.copyWith(
-                  color: AppColors.white,
-                ),
-              ),
+              _WatchlistHeader(viewModel: widget.viewModel),
               const SizedBox(height: 12),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    AppStrings.watchlist,
-                    style: AppFonts.robotoTitleBigMedium,
-                  ),
-                  UIDropdownMovies(
-                    value: viewModel.queryGenre,
-                    onChanged: (genre) =>
-                        viewModel.onUpdateQueryGenre(movieGenre: genre),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 12),
-              if (viewModel.isLoading)
-                const Expanded(child: _LoadingMovieList())
-              else if (viewModel.movies.isEmpty)
-                const _EmptyMovieList()
-              else
-                Expanded(
-                  child: _WatchlistMovieList(
-                    viewModel: viewModel,
-                  ),
-                ),
+              _WatchlistContent(viewModel: widget.viewModel),
             ],
           ),
         );
@@ -91,29 +48,86 @@ class WatchlistView extends StatelessWidget {
   }
 }
 
-class _WatchlistMovieList extends StatelessWidget {
+class _WatchlistHeader extends StatelessWidget {
   final WatchlistViewmodel viewModel;
 
-  const _WatchlistMovieList({
-    required this.viewModel,
-  });
+  const _WatchlistHeader({required this.viewModel});
 
   @override
   Widget build(BuildContext context) {
-    return ListView.separated(
-      padding: const EdgeInsets.only(bottom: 60),
-      itemCount: viewModel.movies.length,
-      itemBuilder: (context, index) => _WatchlistMovieTile(
-        movie: viewModel.movies[index],
-        onMovieWatched: () =>
-            viewModel.onMovieWatched(movieId: viewModel.movies[index].id),
-        onMovieRemoved: () =>
-            viewModel.onMovieRemoved(movieId: viewModel.movies[index].id),
-      ),
-      separatorBuilder: (context, index) => const Padding(
-        padding: EdgeInsets.symmetric(vertical: 13),
-        child: Divider(
-          color: AppColors.gray,
+    return Column(
+      children: [
+        UISearchBar(
+          suffixEmptyIcon: const Icon(
+            Icons.search,
+            color: AppColors.white,
+          ),
+          suffixIcon: const Icon(
+            Icons.close,
+            color: AppColors.white,
+          ),
+          height: 40,
+          backgroundColor: AppColors.darkBlue,
+          onChanged: (value) => viewModel.onUpdateQueryTitle(title: value),
+          hintText: AppStrings.searchMovies,
+          hintStyle: AppFonts.robotoTextSmallRegular.copyWith(
+            color: AppColors.white.withOpacity(0.5),
+          ),
+          textStyle: AppFonts.robotoTextSmallRegular.copyWith(
+            color: AppColors.white,
+          ),
+        ),
+        const SizedBox(height: 12),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              AppStrings.watchlist,
+              style: AppFonts.robotoTitleBigMedium,
+            ),
+            UIDropdownMovies(
+              value: viewModel.queryGenre,
+              onChanged: (genre) =>
+                  viewModel.onUpdateQueryGenre(movieGenre: genre),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+}
+
+class _WatchlistContent extends StatelessWidget {
+  final WatchlistViewmodel viewModel;
+
+  const _WatchlistContent({required this.viewModel});
+
+  @override
+  Widget build(BuildContext context) {
+    if (viewModel.isLoading) {
+      return const Expanded(child: _LoadingMovieList());
+    }
+
+    if (viewModel.movies.isEmpty) {
+      return const _EmptyMovieList();
+    }
+
+    return Expanded(
+      child: ListView.separated(
+        padding: const EdgeInsets.only(bottom: 60),
+        itemCount: viewModel.movies.length,
+        itemBuilder: (context, index) => _WatchlistMovieTile(
+          movie: viewModel.movies[index],
+          onMovieWatched: () =>
+              viewModel.onMovieWatched(movieId: viewModel.movies[index].id),
+          onMovieRemoved: () =>
+              viewModel.onMovieRemoved(movieId: viewModel.movies[index].id),
+        ),
+        separatorBuilder: (context, index) => const Padding(
+          padding: EdgeInsets.symmetric(vertical: 13),
+          child: Divider(
+            color: AppColors.gray,
+          ),
         ),
       ),
     );
