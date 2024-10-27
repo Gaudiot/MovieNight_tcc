@@ -3,42 +3,42 @@ import "package:movie_night_tcc/src/base/enums/movie_collections.enum.dart";
 import "package:movie_night_tcc/src/base/enums/movie_genre.enum.dart";
 import "package:movie_night_tcc/src/lib_mvvm/model/movie.model.dart";
 import "package:movie_night_tcc/src/lib_mvvm/model/movie.storage.dart";
+import "package:movie_night_tcc/src/lib_mvvm/model/watched_state.model.dart";
 
 class WatchedViewmodel extends BaseViewModel {
   final _watchedStorage =
       MovieStorage(movieCollection: MovieCollections.watched);
 
-  final List<MovieModel> movies = [];
-  String queryTitle = "";
-  MovieGenre queryGenre = MovieGenre.unknown;
-  bool filterFavorite = false;
+  final WatchedStateModel _state = WatchedStateModel();
+
+  List<MovieModel> get movies => _state.movies;
+  String get queryTitle => _state.queryTitle;
+  MovieGenre get queryGenre => _state.queryGenre;
+  bool get filterFavorite => _state.filterFavorite;
 
   void onUpdateQueryTitle({
     required String title,
   }) {
-    queryTitle = title;
+    _state.updateQueryTitle = title;
     getMovies();
   }
 
   Future<void> onUpdateQueryGenre({required MovieGenre? movieGenre}) async {
-    queryGenre = movieGenre ?? MovieGenre.unknown;
+    _state.updateQueryGenre = movieGenre ?? MovieGenre.unknown;
     await getMovies();
   }
 
   Future<void> onToggleFilterFavorite() async {
-    filterFavorite = !filterFavorite;
+    _state.toggleFilterFavorite();
     await getMovies();
   }
 
   Future<void> onMovieRemoved({required String movieId}) async {
     final result = await _watchedStorage.delete(movieId: movieId);
-    if (result.hasError) return;
-    if (!result.data!) return;
+    if (result.hasError || !result.data!) return;
 
-    final movieIndex = movies.indexWhere((movie) => movie.id == movieId);
-    if (movieIndex == -1) return;
-
-    movies.removeAt(movieIndex);
+    _state.updateMovies =
+        _state.movies.where((movie) => movie.id != movieId).toList();
     notifyListeners();
   }
 
@@ -55,35 +55,32 @@ class WatchedViewmodel extends BaseViewModel {
     final saveResult = await _watchedStorage.save(movie: movie);
     if (!saveResult.isOk) return;
 
-    final movieIndex = movies.indexWhere((m) => m.id == movieId);
-    if (movieIndex == -1) return;
-
-    movies[movieIndex].favorite = !isFavorite;
+    _state.updateMovies =
+        _state.movies.map((m) => m.id == movieId ? movie : m).toList();
     notifyListeners();
   }
 
   Future<void> getMovies() async {
     setIsLoading(isLoading: true);
 
-    movies.clear();
     final result = await _watchedStorage.getAll();
-    if (!result.hasData) return;
+    if (result.hasError) return;
 
     final allMovies = result.data ?? [];
 
-    movies.addAll(
-      allMovies.where((movie) {
-        final isFavorite = !filterFavorite || movie.favorite;
-        final includesTitle = queryTitle.isEmpty ||
-            movie.title.toLowerCase().contains(queryTitle.toLowerCase());
-        final includesGenre = queryGenre == MovieGenre.unknown ||
-            movie.genres.map((genre) => genre.id).contains(queryGenre.id);
+    final filteredMovies = allMovies.where((movie) {
+      final isFavorite = !_state.filterFavorite || movie.favorite;
+      final includesTitle = _state.queryTitle.isEmpty ||
+          movie.title.toLowerCase().contains(_state.queryTitle.toLowerCase());
+      final includesGenre = _state.queryGenre == MovieGenre.unknown ||
+          movie.genres.map((genre) => genre.id).contains(_state.queryGenre.id);
 
-        return isFavorite && includesGenre && includesTitle;
-      }),
-    );
+      return isFavorite && includesGenre && includesTitle;
+    }).toList();
 
-    movies.sort((a, b) => b.rating.compareTo(a.rating));
+    filteredMovies.sort((a, b) => b.rating.compareTo(a.rating));
+
+    _state.updateMovies = filteredMovies;
 
     setIsLoading(isLoading: false);
   }

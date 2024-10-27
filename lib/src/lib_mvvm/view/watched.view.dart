@@ -9,103 +9,133 @@ import "package:movie_night_tcc/src/shared/widgets/components/ui_dropdown.dart";
 import "package:movie_night_tcc/src/shared/widgets/components/ui_search_bar.dart";
 import "package:movie_night_tcc/src/shared/widgets/movie_banner.dart";
 
-class WatchedView extends StatelessWidget {
-  final viewModel = WatchedViewmodel();
+class WatchedView extends StatefulWidget {
+  final WatchedViewmodel viewModel = WatchedViewmodel();
 
   WatchedView({super.key});
 
   @override
+  State<WatchedView> createState() => _WatchedViewState();
+}
+
+class _WatchedViewState extends State<WatchedView> {
+  @override
+  void initState() {
+    super.initState();
+    widget.viewModel.getMovies();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    bool firstLoad = true;
-
     return ListenableBuilder(
-      listenable: viewModel,
+      listenable: widget.viewModel,
       builder: (context, _) {
-        if (viewModel.movies.isEmpty && firstLoad) {
-          viewModel.getMovies();
-          firstLoad = false;
-        }
-
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Column(
             children: [
-              UISearchBar(
-                suffixEmptyIcon: const Icon(
-                  Icons.search,
-                  color: AppColors.white,
-                ),
-                suffixIcon: const Icon(
-                  Icons.close,
-                  color: AppColors.white,
-                ),
-                height: 40,
-                backgroundColor: AppColors.darkBlue,
-                onChanged: (value) =>
-                    viewModel.onUpdateQueryTitle(title: value),
-                hintText: AppStrings.searchMovies,
-                hintStyle: AppFonts.robotoTextSmallRegular.copyWith(
-                  color: AppColors.white.withOpacity(0.5),
-                ),
-                textStyle: AppFonts.robotoTextSmallRegular.copyWith(
-                  color: AppColors.white,
-                ),
-              ),
+              _WatchedHeader(viewModel: widget.viewModel),
               const SizedBox(height: 12),
-              Row(
-                children: [
-                  Text(
-                    AppStrings.watched,
-                    style: AppFonts.robotoTitleBigMedium,
-                  ),
-                  const Spacer(),
-                  _FavoriteToggle(
-                    onToggleFavorite: viewModel.onToggleFilterFavorite,
-                    isSelected: viewModel.filterFavorite,
-                  ),
-                  const SizedBox(width: 8),
-                  UIDropdownMovies(
-                    value: viewModel.queryGenre,
-                    onChanged: (genre) =>
-                        viewModel.onUpdateQueryGenre(movieGenre: genre),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 12),
-              if (viewModel.isLoading)
-                const Expanded(child: _LoadingMovieList())
-              else if (viewModel.movies.isEmpty)
-                const _EmptyMovieList()
-              else
-                Expanded(
-                  child: GridView.builder(
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      childAspectRatio: 16 / 9,
-                      crossAxisSpacing: 10,
-                      mainAxisSpacing: 10,
-                    ),
-                    itemCount: viewModel.movies.length,
-                    itemBuilder: (_, index) {
-                      final movie = viewModel.movies[index];
-
-                      return MovieBanner(
-                        movie: movie,
-                        onRemove: () =>
-                            viewModel.onMovieRemoved(movieId: movie.id),
-                        onToggleFavorite: () => viewModel.onMovieFavorite(
-                          movieId: movie.id,
-                          isFavorite: movie.favorite,
-                        ),
-                      );
-                    },
-                  ),
-                ),
+              _WatchedContent(viewModel: widget.viewModel),
             ],
           ),
         );
       },
+    );
+  }
+}
+
+class _WatchedHeader extends StatelessWidget {
+  final WatchedViewmodel viewModel;
+
+  const _WatchedHeader({required this.viewModel});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        UISearchBar(
+          suffixEmptyIcon: const Icon(
+            Icons.search,
+            color: AppColors.white,
+          ),
+          suffixIcon: const Icon(
+            Icons.close,
+            color: AppColors.white,
+          ),
+          height: 40,
+          backgroundColor: AppColors.darkBlue,
+          onChanged: (value) => viewModel.onUpdateQueryTitle(title: value),
+          hintText: AppStrings.searchMovies,
+          hintStyle: AppFonts.robotoTextSmallRegular.copyWith(
+            color: AppColors.white.withOpacity(0.5),
+          ),
+          textStyle: AppFonts.robotoTextSmallRegular.copyWith(
+            color: AppColors.white,
+          ),
+        ),
+        const SizedBox(height: 12),
+        Row(
+          children: [
+            Text(
+              AppStrings.watched,
+              style: AppFonts.robotoTitleBigMedium,
+            ),
+            const Spacer(),
+            _FavoriteToggle(
+              onToggleFavorite: viewModel.onToggleFilterFavorite,
+              isSelected: viewModel.filterFavorite,
+            ),
+            const SizedBox(width: 8),
+            UIDropdownMovies(
+              value: viewModel.queryGenre,
+              onChanged: (genre) =>
+                  viewModel.onUpdateQueryGenre(movieGenre: genre),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+}
+
+class _WatchedContent extends StatelessWidget {
+  final WatchedViewmodel viewModel;
+
+  const _WatchedContent({required this.viewModel});
+
+  @override
+  Widget build(BuildContext context) {
+    if (viewModel.isLoading) {
+      return const Expanded(child: _LoadingMovieList());
+    }
+
+    if (viewModel.movies.isEmpty) {
+      return const _EmptyMovieList();
+    }
+
+    return Expanded(
+      child: GridView.builder(
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          childAspectRatio: 16 / 9,
+          crossAxisSpacing: 10,
+          mainAxisSpacing: 10,
+        ),
+        itemCount: viewModel.movies.length,
+        itemBuilder: (_, index) {
+          final movie = viewModel.movies[index];
+
+          return MovieBanner(
+            movie: movie,
+            onRemove: () => viewModel.onMovieRemoved(movieId: movie.id),
+            onToggleFavorite: () => viewModel.onMovieFavorite(
+              movieId: movie.id,
+              isFavorite: movie.favorite,
+            ),
+          );
+        },
+      ),
     );
   }
 }
