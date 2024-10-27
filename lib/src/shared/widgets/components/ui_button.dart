@@ -22,6 +22,7 @@ class UIButton extends StatelessWidget {
       color: Colors.transparent,
       child: InkWell(
         splashColor: AppColors.white.withOpacity(inkwellOpacity),
+        highlightColor: Colors.transparent,
         onTap: onTap,
         child: Padding(
           padding: padding,

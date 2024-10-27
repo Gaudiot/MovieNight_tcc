@@ -32,6 +32,7 @@ class _MainMvvmDefaultState extends State<MainMvvmDefault> {
   }
 
   void onTap([int index = 0]) {
+    if (index == currentIndex) return;
     setState(() {
       currentIndex = index;
     });
@@ -48,6 +49,7 @@ class _MainMvvmDefaultState extends State<MainMvvmDefault> {
           child: Row(
             children: [
               UIButton(
+                inkwellOpacity: 0,
                 onTap: onTap,
                 child: Assets.lib.assets.movieNightLogo.svg(),
               ),
