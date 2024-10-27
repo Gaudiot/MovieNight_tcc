@@ -1,12 +1,16 @@
+import "package:movie_night_tcc/src/base/enums/movie_collections.enum.dart";
 import "package:movie_night_tcc/src/core/local_storage/ilocal_storage.dart";
 import "package:movie_night_tcc/src/core/local_storage/local_storage_exception.dart";
 import "package:movie_night_tcc/src/core/locator.dart";
 import "package:movie_night_tcc/src/core/result_type.dart";
 import "package:movie_night_tcc/src/lib_mvvm/model/movie.model.dart";
 
-class WatchlistStorage {
+class MovieStorage {
   final ILocalStorage _localStorage = locator.get<ILocalStorage>();
-  final String _collectionName = "watchlist";
+  final String _collectionName;
+
+  MovieStorage({required MovieCollections movieCollection})
+      : _collectionName = movieCollection.collectionName;
 
   Future<Result<MovieModel?, LocalStorageException>> get({
     required String movieId,

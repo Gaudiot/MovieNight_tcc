@@ -1,12 +1,14 @@
 import "package:movie_night_tcc/src/base/base_view_model.dart";
+import "package:movie_night_tcc/src/base/enums/movie_collections.enum.dart";
 import "package:movie_night_tcc/src/base/enums/movie_genre.enum.dart";
 import "package:movie_night_tcc/src/lib_mvvm/model/movie.model.dart";
-import "package:movie_night_tcc/src/lib_mvvm/model/watched.storage.dart";
-import "package:movie_night_tcc/src/lib_mvvm/model/watchlist.storage.dart";
+import "package:movie_night_tcc/src/lib_mvvm/model/movie.storage.dart";
 
 class WatchlistViewmodel extends BaseViewModel {
-  final WatchlistStorage _watchlistStorage = WatchlistStorage();
-  final WatchedStorage _watchedStorage = WatchedStorage();
+  final _watchlistStorage =
+      MovieStorage(movieCollection: MovieCollections.watchlist);
+  final _watchedStorage =
+      MovieStorage(movieCollection: MovieCollections.watched);
 
   final List<MovieModel> movies = [];
   String queryTitle = "";
