@@ -7,10 +7,10 @@ import "package:movie_night_tcc/src/core/design/app_strings.dart";
 import "package:movie_night_tcc/src/lib_mvvm/model/search_movie.model.dart";
 import "package:movie_night_tcc/src/lib_mvvm/view_model/search_movies.viewmodel.dart";
 import "package:movie_night_tcc/src/shared/functions/time_utils.dart";
+import "package:movie_night_tcc/src/shared/widgets/components/ui_button.dart";
+import "package:movie_night_tcc/src/shared/widgets/components/ui_dropdown.dart";
+import "package:movie_night_tcc/src/shared/widgets/components/ui_search_bar.dart";
 import "package:movie_night_tcc/src/shared/widgets/movie_poster.dart";
-import "package:movie_night_tcc/src/shared/widgets/ui_button.dart";
-import "package:movie_night_tcc/src/shared/widgets/ui_dropdown.dart";
-import "package:movie_night_tcc/src/shared/widgets/ui_search_bar.dart";
 
 class SearchMoviesView extends StatelessWidget {
   final SearchMoviesViewmodel viewModel = SearchMoviesViewmodel();

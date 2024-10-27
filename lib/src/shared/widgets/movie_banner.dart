@@ -2,8 +2,8 @@ import "package:cached_network_image/cached_network_image.dart";
 import "package:flutter/material.dart";
 import "package:movie_night_tcc/gen/assets.gen.dart";
 import "package:movie_night_tcc/src/lib_mvvm/model/movie.model.dart";
+import "package:movie_night_tcc/src/shared/widgets/components/ui_button.dart";
 import "package:movie_night_tcc/src/shared/widgets/movie_rating.dart";
-import "package:movie_night_tcc/src/shared/widgets/ui_button.dart";
 
 class MovieBanner extends StatelessWidget {
   final MovieModel movie;

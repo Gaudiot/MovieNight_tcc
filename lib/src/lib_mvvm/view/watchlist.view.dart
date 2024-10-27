@@ -7,10 +7,10 @@ import "package:movie_night_tcc/src/core/design/app_strings.dart";
 import "package:movie_night_tcc/src/lib_mvvm/model/movie.model.dart";
 import "package:movie_night_tcc/src/lib_mvvm/view_model/watchlist.viewmodel.dart";
 import "package:movie_night_tcc/src/shared/functions/time_utils.dart";
+import "package:movie_night_tcc/src/shared/widgets/components/ui_button.dart";
+import "package:movie_night_tcc/src/shared/widgets/components/ui_dropdown.dart";
+import "package:movie_night_tcc/src/shared/widgets/components/ui_search_bar.dart";
 import "package:movie_night_tcc/src/shared/widgets/movie_poster.dart";
-import "package:movie_night_tcc/src/shared/widgets/ui_button.dart";
-import "package:movie_night_tcc/src/shared/widgets/ui_dropdown.dart";
-import "package:movie_night_tcc/src/shared/widgets/ui_search_bar.dart";
 
 class WatchlistView extends StatelessWidget {
   final viewModel = WatchlistViewmodel();

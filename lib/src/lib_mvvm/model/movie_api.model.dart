@@ -1,6 +1,6 @@
 part of "movie.api.dart";
 
-@JsonSerializable()
+@JsonSerializable(createFactory: false)
 class GetTrendingMoviesRequest {
   final int page;
 
