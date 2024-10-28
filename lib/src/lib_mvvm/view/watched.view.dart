@@ -4,9 +4,7 @@ import "package:movie_night_tcc/src/core/design/app_colors.dart";
 import "package:movie_night_tcc/src/core/design/app_fonts.dart";
 import "package:movie_night_tcc/src/core/design/app_strings.dart";
 import "package:movie_night_tcc/src/lib_mvvm/view_model/watched.viewmodel.dart";
-import "package:movie_night_tcc/src/shared/widgets/components/ui_button.dart";
-import "package:movie_night_tcc/src/shared/widgets/components/ui_dropdown.dart";
-import "package:movie_night_tcc/src/shared/widgets/components/ui_search_bar.dart";
+import "package:movie_night_tcc/src/shared/widgets/components/components.dart";
 import "package:movie_night_tcc/src/shared/widgets/movie_banner.dart";
 
 class WatchedView extends StatefulWidget {
