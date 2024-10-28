@@ -1,5 +1,9 @@
-import "package:movie_night_tcc/src/lib_mvvm/model/movie.api.dart";
-import "package:movie_night_tcc/src/lib_mvvm/model/movie.entity.dart";
+import "package:movie_night_tcc/src/lib_feature/search_movies/movie.api.dart"
+    as feature;
+import "package:movie_night_tcc/src/lib_feature/search_movies/movie.entity.dart"
+    as feature;
+import "package:movie_night_tcc/src/lib_mvvm/model/movie.api.dart" as mvvm;
+import "package:movie_night_tcc/src/lib_mvvm/model/movie.entity.dart" as mvvm;
 
 abstract class JsonMapper<T> {
   T fromJson(Map<String, dynamic> json);
@@ -8,10 +12,15 @@ abstract class JsonMapper<T> {
 
 class MapperRegistry {
   static final Map<Type, JsonMapper> _mappers = {
-    MovieModel: MovieModelMapper(),
-    GetTrendingMoviesResponse: GetTrendingMoviesResponseMapper(),
-    GetMovieDetailsResponse: GetMovieDetailsResponseMapper(),
-    GetMoviesByTitleResponse: GetMoviesByTitleResponseMapper(),
+    mvvm.MovieModel: mvvm.MovieModelMapper(),
+    mvvm.GetTrendingMoviesResponse: mvvm.GetTrendingMoviesResponseMapper(),
+    mvvm.GetMovieDetailsResponse: mvvm.GetMovieDetailsResponseMapper(),
+    mvvm.GetMoviesByTitleResponse: mvvm.GetMoviesByTitleResponseMapper(),
+    feature.MovieModel: feature.MovieModelMapper(),
+    feature.GetTrendingMoviesResponse:
+        feature.GetTrendingMoviesResponseMapper(),
+    feature.GetMovieDetailsResponse: feature.GetMovieDetailsResponseMapper(),
+    feature.GetMoviesByTitleResponse: feature.GetMoviesByTitleResponseMapper(),
   };
 
   static void register<T>(JsonMapper<T> mapper) {
