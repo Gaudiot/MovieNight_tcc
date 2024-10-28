@@ -1,18 +1,21 @@
 import "package:cached_network_image/cached_network_image.dart";
 import "package:flutter/material.dart";
 import "package:movie_night_tcc/gen/assets.gen.dart";
-import "package:movie_night_tcc/src/lib_mvvm/model/movie.entity.dart";
 import "package:movie_night_tcc/src/shared/widgets/components/ui_button.dart";
 import "package:movie_night_tcc/src/shared/widgets/movie_rating.dart";
 
 class MovieBanner extends StatelessWidget {
-  final MovieModel movie;
+  final String backdropUrl;
+  final double rating;
+  final bool isFavorite;
 
   final VoidCallback onRemove;
   final VoidCallback onToggleFavorite;
 
   const MovieBanner({
-    required this.movie,
+    required this.backdropUrl,
+    required this.rating,
+    required this.isFavorite,
     required this.onRemove,
     required this.onToggleFavorite,
     super.key,
@@ -32,7 +35,7 @@ class MovieBanner extends StatelessWidget {
         child: Stack(
           children: [
             CachedNetworkImage(
-              imageUrl: movie.backdropUrl!,
+              imageUrl: backdropUrl,
               fit: BoxFit.cover,
               width: double.infinity,
               height: double.infinity,
@@ -43,7 +46,7 @@ class MovieBanner extends StatelessWidget {
             Positioned(
               right: 5,
               bottom: 8,
-              child: MovieRating(rating: movie.rating),
+              child: MovieRating(rating: rating),
             ),
             Positioned(
               left: 5,
@@ -51,8 +54,8 @@ class MovieBanner extends StatelessWidget {
               child: AnimatedSwitcher(
                 duration: const Duration(milliseconds: 250),
                 child: _FavoriteButton(
-                  key: ValueKey(movie.favorite),
-                  isFavorite: movie.favorite,
+                  key: ValueKey(isFavorite),
+                  isFavorite: isFavorite,
                   onToggle: onToggleFavorite,
                 ),
               ),

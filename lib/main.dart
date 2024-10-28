@@ -22,7 +22,9 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const appType = AppType.mvvmDefault;
+    // const appType = AppType.mvvmDefault;
+    const appType = AppType.featureBased;
+
     return MaterialApp(
       home: Scaffold(
         body: SafeArea(
