@@ -1,15 +1,15 @@
 import "package:movie_night_tcc/src/base/base_view_model.dart";
 import "package:movie_night_tcc/src/base/enums/movie_genre.enum.dart";
 import "package:movie_night_tcc/src/base/enums/storage_collections.enum.dart";
-import "package:movie_night_tcc/src/lib_mvvm/model/movie.model.dart";
+import "package:movie_night_tcc/src/lib_mvvm/model/movie.entity.dart";
 import "package:movie_night_tcc/src/lib_mvvm/model/movie.storage.dart";
-import "package:movie_night_tcc/src/lib_mvvm/model/watched_state.model.dart";
+import "package:movie_night_tcc/src/lib_mvvm/model/watched_state.entity.dart";
 
 class WatchedViewmodel extends BaseViewModel {
   final _watchedStorage =
       MovieStorage(movieCollection: StorageCollections.watched);
 
-  final WatchedStateModel _state = WatchedStateModel();
+  final WatchedStateEntity _state = WatchedStateEntity();
 
   List<MovieModel> get movies => _state.movies;
   String get queryTitle => _state.queryTitle;

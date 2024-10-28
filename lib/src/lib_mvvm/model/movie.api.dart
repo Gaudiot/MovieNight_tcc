@@ -5,7 +5,7 @@ import "package:movie_night_tcc/src/core/json_mapper.dart";
 import "package:movie_night_tcc/src/core/network/inetwork.dart";
 import "package:movie_night_tcc/src/core/network/network_exception.dart";
 import "package:movie_night_tcc/src/core/result_type.dart";
-import "package:movie_night_tcc/src/lib_mvvm/model/movie.model.dart";
+import "package:movie_night_tcc/src/lib_mvvm/model/movie.entity.dart";
 
 part "movie.api.g.dart";
 part "movie_api.enum.dart";

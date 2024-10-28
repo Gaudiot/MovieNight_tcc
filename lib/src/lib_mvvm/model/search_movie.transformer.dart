@@ -1,10 +1,10 @@
 import "package:movie_night_tcc/src/base/enums/storage_collections.enum.dart";
-import "package:movie_night_tcc/src/lib_mvvm/model/movie.model.dart";
+import "package:movie_night_tcc/src/lib_mvvm/model/movie.entity.dart";
 import "package:movie_night_tcc/src/lib_mvvm/model/movie.storage.dart";
-import "package:movie_night_tcc/src/lib_mvvm/model/search_movie.model.dart";
+import "package:movie_night_tcc/src/lib_mvvm/model/search_movie.entity.dart";
 
 class SearchMovieTransformer {
-  static Future<List<SearchMovieModel>> fromMovieModels(
+  static Future<List<SearchMovieEntity>> fromMovieModels(
     List<MovieModel> movies,
   ) async {
     final watchedStorage =
@@ -26,7 +26,7 @@ class SearchMovieTransformer {
 
     return movies
         .map(
-          (movie) => SearchMovieModel(
+          (movie) => SearchMovieEntity(
             movie: movie,
             isWatched: watchedMoviesIds.contains(movie.tmdbId),
             isWatchlist: watchlistMoviesIds.contains(movie.tmdbId),

@@ -2,11 +2,11 @@ import "package:movie_night_tcc/src/base/base_view_model.dart";
 import "package:movie_night_tcc/src/base/enums/movie_genre.enum.dart";
 import "package:movie_night_tcc/src/base/enums/storage_collections.enum.dart";
 import "package:movie_night_tcc/src/lib_mvvm/model/movie.api.dart";
-import "package:movie_night_tcc/src/lib_mvvm/model/movie.model.dart";
+import "package:movie_night_tcc/src/lib_mvvm/model/movie.entity.dart";
 import "package:movie_night_tcc/src/lib_mvvm/model/movie.storage.dart";
-import "package:movie_night_tcc/src/lib_mvvm/model/search_movie.model.dart";
+import "package:movie_night_tcc/src/lib_mvvm/model/search_movie.entity.dart";
 import "package:movie_night_tcc/src/lib_mvvm/model/search_movie.transformer.dart";
-import "package:movie_night_tcc/src/lib_mvvm/model/search_movie_state.model.dart";
+import "package:movie_night_tcc/src/lib_mvvm/model/search_movie_state.entity.dart";
 
 class SearchMoviesViewmodel extends BaseViewModel {
   final _movieNetwork = MovieApi();
@@ -15,9 +15,9 @@ class SearchMoviesViewmodel extends BaseViewModel {
   final watchedLocalStorage =
       MovieStorage(movieCollection: StorageCollections.watched);
 
-  final SearchMovieStateModel _state = SearchMovieStateModel();
+  final SearchMovieStateEntity _state = SearchMovieStateEntity();
 
-  List<SearchMovieModel> get movies => _state.movies;
+  List<SearchMovieEntity> get movies => _state.movies;
   String get queryTitle => _state.queryTitle;
   MovieGenre get queryGenre => _state.queryGenre;
   int get currentPage => _state.currentPage;

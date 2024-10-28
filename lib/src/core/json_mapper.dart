@@ -1,5 +1,5 @@
 import "package:movie_night_tcc/src/lib_mvvm/model/movie.api.dart";
-import "package:movie_night_tcc/src/lib_mvvm/model/movie.model.dart";
+import "package:movie_night_tcc/src/lib_mvvm/model/movie.entity.dart";
 
 abstract class JsonMapper<T> {
   T fromJson(Map<String, dynamic> json);
