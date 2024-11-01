@@ -38,7 +38,7 @@ class UISearchBar extends SearchBar {
 
   const UISearchBar.delayed({
     required super.onChanged,
-    int delayInMs = 2500,
+    int delayInMs = 500,
     super.hintText,
     super.key,
     this.horizontalPadding = 16,
