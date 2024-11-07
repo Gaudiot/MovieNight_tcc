@@ -31,6 +31,11 @@ class AppStrings {
     AppLanguageEnum.enUs => "Search",
   };
 
+  static String profile = switch (appLanguage) {
+    AppLanguageEnum.ptBr => "Perfil",
+    AppLanguageEnum.enUs => "Profile",
+  };
+
   static String watched = switch (appLanguage) {
     AppLanguageEnum.ptBr => "Assistido",
     AppLanguageEnum.enUs => "Watched",
@@ -67,4 +72,54 @@ class AppStrings {
     AppLanguageEnum.ptBr => "Carregando filmes...",
     AppLanguageEnum.enUs => "Loading movies...",
   };
+
+  static String timeSpentWatching = switch (appLanguage) {
+    AppLanguageEnum.ptBr => "Tempo assistido",
+    AppLanguageEnum.enUs => "Time spent watching",
+  };
+
+  static String totalMoviesWatched = switch (appLanguage) {
+    AppLanguageEnum.ptBr => "Filmes assistidos",
+    AppLanguageEnum.enUs => "Movies watched",
+  };
+
+  static String favoriteGenre = switch (appLanguage) {
+    AppLanguageEnum.ptBr => "Gênero favorito",
+    AppLanguageEnum.enUs => "Favorite genre",
+  };
+
+  static String mainGenresWatched = switch (appLanguage) {
+    AppLanguageEnum.ptBr => "Principais gêneros assistidos",
+    AppLanguageEnum.enUs => "Main genres watched",
+  };
+
+  static String deleteMyData = switch (appLanguage) {
+    AppLanguageEnum.ptBr => "Apagar meus dados",
+    AppLanguageEnum.enUs => "Delete my data",
+  };
+
+  static String years(int value) => switch (appLanguage) {
+        AppLanguageEnum.ptBr => value == 1 ? "ano" : "anos",
+        AppLanguageEnum.enUs => value == 1 ? "year" : "years",
+      };
+
+  static String months(int value) => switch (appLanguage) {
+        AppLanguageEnum.ptBr => value == 1 ? "mês" : "meses",
+        AppLanguageEnum.enUs => value == 1 ? "month" : "months",
+      };
+
+  static String days(int value) => switch (appLanguage) {
+        AppLanguageEnum.ptBr => value == 1 ? "dia" : "dias",
+        AppLanguageEnum.enUs => value == 1 ? "day" : "days",
+      };
+
+  static String hours(int value) => switch (appLanguage) {
+        AppLanguageEnum.ptBr => value == 1 ? "hora" : "horas",
+        AppLanguageEnum.enUs => value == 1 ? "hour" : "hours",
+      };
+
+  static String minutes(int value) => switch (appLanguage) {
+        AppLanguageEnum.ptBr => value == 1 ? "minuto" : "minutos",
+        AppLanguageEnum.enUs => value == 1 ? "minute" : "minutes",
+      };
 }
