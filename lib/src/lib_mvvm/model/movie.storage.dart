@@ -78,4 +78,12 @@ class MovieStorage {
     );
     return Result.ok(data: result);
   }
+
+  Future<Result<bool, LocalStorageException>> drop() async {
+    final result = await _localStorage.dropCollection(
+      collection: _collectionName,
+    );
+
+    return Result.ok(data: result);
+  }
 }
