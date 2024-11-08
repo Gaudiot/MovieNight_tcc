@@ -1,8 +1,11 @@
 import "package:go_router/go_router.dart";
 import "package:movie_night_tcc/src/base/enums/app_routes.enum.dart";
 import "package:movie_night_tcc/src/core/navigation/inavigation.dart";
-import "package:movie_night_tcc/src/lib_mvvm/view/home.view.dart";
-import "package:movie_night_tcc/src/lib_mvvm/view/profile.view.dart";
+import "package:movie_night_tcc/src/lib_feature/home/home.dart" as feature;
+import "package:movie_night_tcc/src/lib_feature/profile/profile.view.dart"
+    as feature;
+import "package:movie_night_tcc/src/lib_mvvm/view/home.view.dart" as mvvm;
+import "package:movie_night_tcc/src/lib_mvvm/view/profile.view.dart" as mvvm;
 
 enum AppType {
   featureBased,
@@ -14,22 +17,37 @@ final _goRouterMvvm = GoRouter(
   routes: [
     GoRoute(
       path: AppRoutes.home.path,
-      builder: (context, state) => const HomeView(),
+      builder: (context, state) => const mvvm.HomeView(),
     ),
     GoRoute(
       path: AppRoutes.profile.path,
-      builder: (context, state) => ProfileView(),
+      builder: (context, state) => mvvm.ProfileView(),
+    ),
+  ],
+);
+
+final _goRouterFeatureBased = GoRouter(
+  initialLocation: AppRoutes.home.path,
+  routes: [
+    GoRoute(
+      path: AppRoutes.home.path,
+      builder: (context, state) => const feature.HomeView(),
+    ),
+    GoRoute(
+      path: AppRoutes.profile.path,
+      builder: (context, state) => feature.ProfileView(),
     ),
   ],
 );
 
 class GoRouterNavigation implements INavigation {
-  static const appType = AppType.mvvmDefault;
+  // static const appType = AppType.mvvmDefault;
+  static const appType = AppType.featureBased;
 
   @override
   GoRouter get routerConfig => switch (appType) {
         AppType.mvvmDefault => _goRouterMvvm,
-        AppType.featureBased => _goRouterMvvm,
+        AppType.featureBased => _goRouterFeatureBased,
       };
 
   @override

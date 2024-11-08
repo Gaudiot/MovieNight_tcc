@@ -75,6 +75,7 @@ class SearchMoviesViewmodel extends BaseViewModel {
   }
 
   Future<void> fetchMovies() async {
+    if (isLoading) return;
     setIsLoading(isLoading: true);
 
     final List<int> movieIds;
