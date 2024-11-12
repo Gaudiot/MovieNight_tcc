@@ -1,24 +1,19 @@
 import "package:flutter/material.dart";
 import "package:movie_night_tcc/gen/assets.gen.dart";
-import "package:movie_night_tcc/src/base/enums/app_routes.enum.dart";
-import "package:movie_night_tcc/src/base/widgets/base_wrapper.dart";
 import "package:movie_night_tcc/src/core/design/app_colors.dart";
-import "package:movie_night_tcc/src/core/locator.dart";
-import "package:movie_night_tcc/src/core/navigation/inavigation.dart";
 import "package:movie_night_tcc/src/lib_mvvm/view/search_movies.view.dart";
 import "package:movie_night_tcc/src/lib_mvvm/view/watched.view.dart";
 import "package:movie_night_tcc/src/lib_mvvm/view/watchlist.view.dart";
 import "package:movie_night_tcc/src/shared/widgets/components/ui_button.dart";
 
-class HomeView extends StatefulWidget {
-  const HomeView({super.key});
+class MainMvvmDefault extends StatefulWidget {
+  const MainMvvmDefault({super.key});
 
   @override
-  State<HomeView> createState() => _HomeViewState();
+  State<MainMvvmDefault> createState() => _MainMvvmDefaultState();
 }
 
-class _HomeViewState extends State<HomeView> {
-  final navigation = locator.get<INavigation>();
+class _MainMvvmDefaultState extends State<MainMvvmDefault> {
   int currentIndex = 0;
 
   final List<Widget> pages = [
@@ -45,12 +40,25 @@ class _HomeViewState extends State<HomeView> {
 
   @override
   Widget build(BuildContext context) {
-    return BaseWrapper(
-      appBar: _HomeAppBar(
-        onPrefixTap: onTap,
-        onSuffixTap: () => navigation.push(path: AppRoutes.profile),
+    return Scaffold(
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(90),
+        child: Container(
+          padding: const EdgeInsets.only(top: 20, left: 12, bottom: 16),
+          color: AppColors.darkestBlue,
+          child: Row(
+            children: [
+              UIButton(
+                inkwellOpacity: 0,
+                onTap: onTap,
+                child: Assets.lib.assets.movieNightLogo.svg(),
+              ),
+            ],
+          ),
+        ),
       ),
-      child: Stack(
+      backgroundColor: AppColors.darkestBlue,
+      body: Stack(
         alignment: Alignment.bottomCenter,
         children: [
           pageBuilder(currentIndex),
@@ -78,42 +86,6 @@ class _HomeViewState extends State<HomeView> {
                 label: "Profile",
               ),
             ],
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _HomeAppBar extends StatelessWidget {
-  final VoidCallback? onPrefixTap;
-  final VoidCallback? onSuffixTap;
-
-  const _HomeAppBar({
-    this.onPrefixTap,
-    this.onSuffixTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 20),
-      child: Row(
-        children: [
-          UIButton(
-            inkwellOpacity: 0,
-            onTap: onPrefixTap,
-            child: Assets.lib.assets.movieNightLogo.svg(),
-          ),
-          const Spacer(),
-          UIButton(
-            inkwellOpacity: 0,
-            onTap: onSuffixTap,
-            child: const Icon(
-              Icons.account_circle_outlined,
-              color: AppColors.white,
-              size: 40,
-            ),
           ),
         ],
       ),
