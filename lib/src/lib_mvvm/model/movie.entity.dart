@@ -2,7 +2,7 @@ import "package:json_annotation/json_annotation.dart";
 import "package:movie_night_tcc/src/base/enums/movie_genre.enum.dart";
 import "package:movie_night_tcc/src/core/json_mapper.dart";
 
-part "movie.entity.g.dart";
+part "movie.model.g.dart";
 
 @JsonSerializable()
 class MovieModel {

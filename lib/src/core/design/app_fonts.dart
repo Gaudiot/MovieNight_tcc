@@ -14,12 +14,6 @@ class AppFonts {
     color: AppColors.white,
   );
 
-  static TextStyle robotoTextSmallMedium = const TextStyle(
-    fontSize: 14,
-    fontWeight: FontWeight.w500,
-    color: AppColors.white,
-  );
-
   static TextStyle robotoTextSmallBold = const TextStyle(
     fontSize: 14,
     fontWeight: FontWeight.bold,
@@ -29,12 +23,6 @@ class AppFonts {
   static TextStyle robotoTitleBigMedium = const TextStyle(
     fontSize: 24,
     fontWeight: FontWeight.w500,
-    color: AppColors.white,
-  );
-
-  static TextStyle robotoTitleBigBold = const TextStyle(
-    fontSize: 24,
-    fontWeight: FontWeight.bold,
     color: AppColors.white,
   );
 
