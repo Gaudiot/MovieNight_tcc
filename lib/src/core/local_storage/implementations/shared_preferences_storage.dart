@@ -30,8 +30,6 @@ class SharedPreferencesAsyncStorage extends ILocalStorage {
   Future<void> init() async {
     SharedPreferences.setPrefix("uniqueAppId");
 
-    await runMigrations();
-
     final keys = await _storage.getKeys();
     _collections = keys.fold<Map<String, List<String>>>(
       {},
@@ -45,11 +43,6 @@ class SharedPreferencesAsyncStorage extends ILocalStorage {
       },
     );
     super.init();
-  }
-
-  @override
-  Future<void> runMigrations() async {
-    // No migrations needed
   }
 
   @override
@@ -87,9 +80,7 @@ class SharedPreferencesAsyncStorage extends ILocalStorage {
       return Result.ok(data: data);
     } catch (error) {
       return Result.error(
-        error: SharedPreferencesException(
-          message: error.toString(),
-        ),
+        error: SharedPreferencesException(message: error.toString()),
       );
     }
   }
@@ -125,9 +116,7 @@ class SharedPreferencesAsyncStorage extends ILocalStorage {
       return Result.ok(data: result);
     } catch (error) {
       return Result.error(
-        error: SharedPreferencesException(
-          message: error.toString(),
-        ),
+        error: SharedPreferencesException(message: error.toString()),
       );
     }
   }
@@ -165,9 +154,7 @@ class SharedPreferencesAsyncStorage extends ILocalStorage {
       return Result.ok(data: true);
     } catch (error) {
       return Result.error(
-        error: SharedPreferencesException(
-          message: error.toString(),
-        ),
+        error: SharedPreferencesException(message: error.toString()),
       );
     }
   }
