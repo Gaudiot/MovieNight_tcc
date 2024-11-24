@@ -1,9 +1,9 @@
 import "package:movie_night_tcc/src/base/base_view_model.dart";
 import "package:movie_night_tcc/src/base/enums/movie_genre.enum.dart";
 import "package:movie_night_tcc/src/base/enums/storage_collections.enum.dart";
-import "package:movie_night_tcc/src/lib_mvvm/model/movie.entity.dart";
+import "package:movie_night_tcc/src/lib_mvvm/model/entity/movie.entity.dart";
+import "package:movie_night_tcc/src/lib_mvvm/model/entity/watched_state.entity.dart";
 import "package:movie_night_tcc/src/lib_mvvm/model/movie.storage.dart";
-import "package:movie_night_tcc/src/lib_mvvm/model/watched_state.entity.dart";
 
 class WatchedViewmodel extends BaseViewModel {
   final _watchedStorage =
@@ -78,7 +78,7 @@ class WatchedViewmodel extends BaseViewModel {
       return isFavorite && includesGenre && includesTitle;
     }).toList();
 
-    filteredMovies.sort((a, b) => b.rating.compareTo(a.rating));
+    filteredMovies.sort((a, b) => a.runtime.compareTo(b.runtime));
 
     _state.updateMovies = filteredMovies;
 

@@ -1,7 +1,7 @@
 import "package:movie_night_tcc/src/base/enums/movie_genre.enum.dart";
-import "package:movie_night_tcc/src/lib_mvvm/model/main_genre_watched.entity.dart";
-import "package:movie_night_tcc/src/lib_mvvm/model/movie.entity.dart";
-import "package:movie_night_tcc/src/lib_mvvm/model/profile_state.entity.dart";
+import "package:movie_night_tcc/src/lib_mvvm/model/entity/main_genre_watched.entity.dart";
+import "package:movie_night_tcc/src/lib_mvvm/model/entity/movie.entity.dart";
+import "package:movie_night_tcc/src/lib_mvvm/model/entity/profile_state.entity.dart";
 
 class ProfileTransformer {
   ProfileTransformer._();

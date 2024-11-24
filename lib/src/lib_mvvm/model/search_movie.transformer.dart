@@ -1,7 +1,7 @@
 import "package:movie_night_tcc/src/base/enums/storage_collections.enum.dart";
-import "package:movie_night_tcc/src/lib_mvvm/model/movie.entity.dart";
+import "package:movie_night_tcc/src/lib_mvvm/model/entity/movie.entity.dart";
+import "package:movie_night_tcc/src/lib_mvvm/model/entity/search_movie.entity.dart";
 import "package:movie_night_tcc/src/lib_mvvm/model/movie.storage.dart";
-import "package:movie_night_tcc/src/lib_mvvm/model/search_movie.entity.dart";
 
 class SearchMovieTransformer {
   static Future<List<SearchMovieEntity>> fromMovieModels(

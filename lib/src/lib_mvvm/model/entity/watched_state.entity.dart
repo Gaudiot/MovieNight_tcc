@@ -1,15 +1,17 @@
 import "package:movie_night_tcc/src/base/enums/movie_genre.enum.dart";
-import "package:movie_night_tcc/src/lib_mvvm/model/movie.entity.dart";
+import "package:movie_night_tcc/src/lib_mvvm/model/entity/movie.entity.dart";
 
-class WatchlistStateEntity {
+class WatchedStateEntity {
   List<MovieModel> movies;
   String queryTitle;
   MovieGenre queryGenre;
+  bool filterFavorite;
 
-  WatchlistStateEntity({
+  WatchedStateEntity({
     this.movies = const [],
     this.queryTitle = "",
     this.queryGenre = MovieGenre.unknown,
+    this.filterFavorite = false,
   });
 
   set updateMovies(List<MovieModel> newMovies) {
@@ -22,5 +24,9 @@ class WatchlistStateEntity {
 
   set updateQueryGenre(MovieGenre newQueryGenre) {
     queryGenre = newQueryGenre;
+  }
+
+  void toggleFilterFavorite() {
+    filterFavorite = !filterFavorite;
   }
 }
