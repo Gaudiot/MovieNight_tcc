@@ -1,4 +1,4 @@
-part of "profile.view.dart";
+part of "../profile.view.dart";
 
 class _ProfileAppBar extends StatelessWidget {
   final VoidCallback onTap;
@@ -83,7 +83,7 @@ class _TimeSpentWatching extends StatelessWidget {
   Widget build(BuildContext context) {
     return _BasePage(
       icon: Assets.lib.assets.oldTelevision.svg(),
-      title: AppStrings.timeSpentWatching,
+      title: AppStrings.profile.timeSpentWatching,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -122,7 +122,7 @@ class _TotalMoviesWatched extends StatelessWidget {
   Widget build(BuildContext context) {
     return _BasePage(
       icon: Assets.lib.assets.icPopcorn.svg(),
-      title: AppStrings.totalMoviesWatched,
+      title: AppStrings.profile.totalMoviesWatched,
       child: Center(
         child: Text(
           totalMoviesWatched.toString(),
@@ -146,7 +146,7 @@ class _FavoriteGenre extends StatelessWidget {
   Widget build(BuildContext context) {
     return _BasePage(
       icon: Assets.lib.assets.icStarOutline.svg(),
-      title: AppStrings.favoriteGenre,
+      title: AppStrings.profile.favoriteGenre,
       child: Center(
         child: Text(
           genre != null ? genre!.label : "",

@@ -153,8 +153,10 @@ class _MovieTile extends StatelessWidget {
     required this.onMovieWatched,
   });
 
-  String get _releaseYear => dateTimeToYear(searchMovie.movie.releaseDate);
-  String get _runtimeFormatted => intToRuntime(searchMovie.movie.runtime);
+  String get _releaseYear =>
+      TimeUtils.dateTimeToYear(searchMovie.movie.releaseDate);
+  String get _runtimeFormatted =>
+      TimeUtils.intToRuntime(searchMovie.movie.runtime);
 
   @override
   Widget build(BuildContext context) {

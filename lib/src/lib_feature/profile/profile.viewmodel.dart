@@ -38,7 +38,7 @@ class ProfileViewmodel extends BaseViewModel {
   }
 
   List<DateInfo> getWatchedTimeInfo() {
-    return runtimeToDateInfo(_state.totalMinutesWatched);
+    return TimeUtils.runtimeToDateInfo(_state.totalMinutesWatched);
   }
 
   Future<void> deleteUserData() async {

@@ -13,7 +13,7 @@ import "package:movie_night_tcc/src/lib_mvvm/view_model/profile.viewmodel.dart";
 import "package:movie_night_tcc/src/shared/functions/time_utils.dart";
 import "package:movie_night_tcc/src/shared/widgets/components/components.dart";
 
-part "profile.widgets.dart";
+part "widget/profile.widgets.dart";
 
 class ProfileView extends StatefulWidget {
   final ProfileViewmodel viewModel = ProfileViewmodel();
@@ -45,7 +45,7 @@ class _ProfileViewState extends State<ProfileView> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  AppStrings.profile,
+                  AppStrings.profile.title,
                   style: AppFonts.robotoTitleBigMedium,
                 ),
                 const SizedBox(height: 20),
@@ -76,7 +76,7 @@ class _ProfileViewState extends State<ProfileView> {
                     ),
                     child: Center(
                       child: Text(
-                        AppStrings.deleteMyData,
+                        AppStrings.profile.deleteMyData,
                         style: AppFonts.robotoTextSmallBold,
                       ),
                     ),
@@ -177,7 +177,7 @@ class _MainGenresWatched extends StatelessWidget {
       children: [
         _BaseHeader(
           icon: Assets.lib.assets.movieRollPiece.svg(),
-          title: AppStrings.mainGenresWatched,
+          title: AppStrings.profile.mainGenresWatched,
         ),
         const SizedBox(height: 16),
         Padding(

@@ -3,9 +3,11 @@ enum AppLanguageEnum {
   enUs,
 }
 
-AppLanguageEnum appLanguage = AppLanguageEnum.enUs;
+AppLanguageEnum appLanguage = AppLanguageEnum.ptBr;
 
 class AppStrings {
+  const AppStrings._();
+
   static String addToWatchlist = switch (appLanguage) {
     AppLanguageEnum.ptBr => "Planejar",
     AppLanguageEnum.enUs => "Add Watchlist",
@@ -31,10 +33,7 @@ class AppStrings {
     AppLanguageEnum.enUs => "Search",
   };
 
-  static String profile = switch (appLanguage) {
-    AppLanguageEnum.ptBr => "Perfil",
-    AppLanguageEnum.enUs => "Profile",
-  };
+  static ProfileStrings profile = ProfileStrings();
 
   static String watched = switch (appLanguage) {
     AppLanguageEnum.ptBr => "Assistido",
@@ -72,53 +71,60 @@ class AppStrings {
     AppLanguageEnum.ptBr => "Carregando filmes...",
     AppLanguageEnum.enUs => "Loading movies...",
   };
+}
 
-  static String timeSpentWatching = switch (appLanguage) {
-    AppLanguageEnum.ptBr => "Tempo assistido",
-    AppLanguageEnum.enUs => "Time spent watching",
-  };
+class ProfileStrings {
+  String get title => switch (appLanguage) {
+        AppLanguageEnum.ptBr => "Perfil",
+        AppLanguageEnum.enUs => "Profile",
+      };
 
-  static String totalMoviesWatched = switch (appLanguage) {
-    AppLanguageEnum.ptBr => "Filmes assistidos",
-    AppLanguageEnum.enUs => "Movies watched",
-  };
+  String get timeSpentWatching => switch (appLanguage) {
+        AppLanguageEnum.ptBr => "Tempo assistido",
+        AppLanguageEnum.enUs => "Time spent watching",
+      };
 
-  static String favoriteGenre = switch (appLanguage) {
-    AppLanguageEnum.ptBr => "Gênero favorito",
-    AppLanguageEnum.enUs => "Favorite genre",
-  };
+  String get totalMoviesWatched => switch (appLanguage) {
+        AppLanguageEnum.ptBr => "Filmes assistidos",
+        AppLanguageEnum.enUs => "Movies watched",
+      };
 
-  static String mainGenresWatched = switch (appLanguage) {
-    AppLanguageEnum.ptBr => "Principais gêneros assistidos",
-    AppLanguageEnum.enUs => "Main genres watched",
-  };
+  String get favoriteGenre => switch (appLanguage) {
+        AppLanguageEnum.ptBr => "Gênero favorito",
+        AppLanguageEnum.enUs => "Favorite genre",
+      };
 
-  static String deleteMyData = switch (appLanguage) {
-    AppLanguageEnum.ptBr => "Apagar meus dados",
-    AppLanguageEnum.enUs => "Delete my data",
-  };
+  String get mainGenresWatched => switch (appLanguage) {
+        AppLanguageEnum.ptBr => "Principais gêneros assistidos",
+        AppLanguageEnum.enUs => "Main genres watched",
+      };
 
-  static String years(int value) => switch (appLanguage) {
+  String get deleteMyData => switch (appLanguage) {
+        AppLanguageEnum.ptBr => "Apagar meus dados",
+        AppLanguageEnum.enUs => "Delete my data",
+      };
+
+  String years(int value) => switch (appLanguage) {
         AppLanguageEnum.ptBr => value == 1 ? "ano" : "anos",
         AppLanguageEnum.enUs => value == 1 ? "year" : "years",
       };
 
-  static String months(int value) => switch (appLanguage) {
+  String months(int value) => switch (appLanguage) {
         AppLanguageEnum.ptBr => value == 1 ? "mês" : "meses",
         AppLanguageEnum.enUs => value == 1 ? "month" : "months",
       };
 
-  static String days(int value) => switch (appLanguage) {
+  String days(int value) => switch (appLanguage) {
         AppLanguageEnum.ptBr => value == 1 ? "dia" : "dias",
         AppLanguageEnum.enUs => value == 1 ? "day" : "days",
       };
 
-  static String hours(int value) => switch (appLanguage) {
+  String hours(int value) => switch (appLanguage) {
         AppLanguageEnum.ptBr => value == 1 ? "hora" : "horas",
         AppLanguageEnum.enUs => value == 1 ? "hour" : "hours",
       };
 
-  static String minutes(int value) => switch (appLanguage) {
+  String minutes(int value) => switch (appLanguage) {
         AppLanguageEnum.ptBr => value == 1 ? "minuto" : "minutos",
         AppLanguageEnum.enUs => value == 1 ? "minute" : "minutes",
       };

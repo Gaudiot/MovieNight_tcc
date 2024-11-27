@@ -10,38 +10,49 @@ class DateInfo {
   });
 }
 
-String intToRuntime(int runtime) {
-  return "${runtime ~/ 60}h${(runtime % 60).toString().padLeft(2, '0')}m";
-}
+class TimeUtils {
+  const TimeUtils._();
 
-String dateTimeToYear(DateTime date) {
-  return date.year.toString();
-}
-
-List<DateInfo> runtimeToDateInfo(int runtime) {
-  final minutes = runtime % 60;
-  final hours = (runtime ~/ 60) % 24;
-  final days = (runtime ~/ (60 * 24)) % 30;
-  final months = (runtime ~/ (60 * 24 * 30)) % 12;
-  final years = runtime ~/ (60 * 24 * 30 * 12);
-
-  final List<DateInfo> dateInfos = [];
-
-  if (years > 0) {
-    dateInfos.add(DateInfo(value: years, label: AppStrings.years(years)));
+  static String intToRuntime(int runtime) {
+    return "${runtime ~/ 60}h${(runtime % 60).toString().padLeft(2, '0')}m";
   }
 
-  if (months > 0) {
-    dateInfos.add(DateInfo(value: months, label: AppStrings.months(months)));
+  static String dateTimeToYear(DateTime date) {
+    return date.year.toString();
   }
 
-  if (days > 0) {
-    dateInfos.add(DateInfo(value: days, label: AppStrings.days(days)));
+  static List<DateInfo> runtimeToDateInfo(int runtime) {
+    final minutes = runtime % 60;
+    final hours = (runtime ~/ 60) % 24;
+    final days = (runtime ~/ (60 * 24)) % 30;
+    final months = (runtime ~/ (60 * 24 * 30)) % 12;
+    final years = runtime ~/ (60 * 24 * 30 * 12);
+
+    final List<DateInfo> dateInfos = [];
+
+    if (years > 0) {
+      dateInfos
+          .add(DateInfo(value: years, label: AppStrings.profile.years(years)));
+    }
+
+    if (months > 0) {
+      dateInfos.add(
+        DateInfo(value: months, label: AppStrings.profile.months(months)),
+      );
+    }
+
+    if (days > 0) {
+      dateInfos
+          .add(DateInfo(value: days, label: AppStrings.profile.days(days)));
+    }
+
+    dateInfos
+        .add(DateInfo(value: hours, label: AppStrings.profile.hours(hours)));
+
+    dateInfos.add(
+      DateInfo(value: minutes, label: AppStrings.profile.minutes(minutes)),
+    );
+
+    return dateInfos;
   }
-
-  dateInfos.add(DateInfo(value: hours, label: AppStrings.hours(hours)));
-
-  dateInfos.add(DateInfo(value: minutes, label: AppStrings.minutes(minutes)));
-
-  return dateInfos;
 }

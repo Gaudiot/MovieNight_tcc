@@ -21,12 +21,6 @@ class _HomeViewState extends State<HomeView> {
   final navigation = locator.get<INavigation>();
   int currentIndex = 0;
 
-  final List<Widget> pages = [
-    SearchMoviesView(),
-    WatchlistView(),
-    WatchedView(),
-  ];
-
   Widget pageBuilder(int index) {
     return switch (index) {
       0 => SearchMoviesView(),

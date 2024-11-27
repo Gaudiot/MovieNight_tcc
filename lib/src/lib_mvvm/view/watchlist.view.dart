@@ -144,8 +144,8 @@ class _WatchlistMovieTile extends StatelessWidget {
     required this.onMovieRemoved,
   });
 
-  String get _releaseYear => dateTimeToYear(movie.releaseDate);
-  String get _runtimeFormatted => intToRuntime(movie.runtime);
+  String get _releaseYear => TimeUtils.dateTimeToYear(movie.releaseDate);
+  String get _runtimeFormatted => TimeUtils.intToRuntime(movie.runtime);
 
   @override
   Widget build(BuildContext context) {
