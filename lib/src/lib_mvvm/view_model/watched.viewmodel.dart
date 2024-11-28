@@ -1,14 +1,10 @@
 import "package:movie_night_tcc/src/base/base_view_model.dart";
 import "package:movie_night_tcc/src/base/enums/movie_genre.enum.dart";
-import "package:movie_night_tcc/src/base/enums/storage_collections.enum.dart";
 import "package:movie_night_tcc/src/lib_mvvm/model/entity/movie.entity.dart";
 import "package:movie_night_tcc/src/lib_mvvm/model/entity/watched_state.entity.dart";
-import "package:movie_night_tcc/src/lib_mvvm/model/movie.storage.dart";
+import "package:movie_night_tcc/src/lib_mvvm/model/storage/movie.storage.dart";
 
 class WatchedViewmodel extends BaseViewModel {
-  final _watchedStorage =
-      MovieStorage(movieCollection: StorageCollections.watched);
-
   final WatchedStateEntity _state = WatchedStateEntity();
 
   List<MovieModel> get movies => _state.movies;
@@ -34,7 +30,7 @@ class WatchedViewmodel extends BaseViewModel {
   }
 
   Future<void> onMovieRemoved({required String movieId}) async {
-    final result = await _watchedStorage.delete(movieId: movieId);
+    final result = await watchedStorage.delete(movieId: movieId);
     if (result.hasError || !result.data!) return;
 
     _state.updateMovies =
@@ -46,13 +42,13 @@ class WatchedViewmodel extends BaseViewModel {
     required String movieId,
     bool isFavorite = false,
   }) async {
-    final result = await _watchedStorage.get(movieId: movieId);
+    final result = await watchedStorage.get(movieId: movieId);
     if (!result.hasData) return;
 
     final movie = result.data!;
     movie.favorite = !isFavorite;
 
-    final saveResult = await _watchedStorage.save(movie: movie);
+    final saveResult = await watchedStorage.save(movie: movie);
     if (!saveResult.isOk) return;
 
     _state.updateMovies =
@@ -63,7 +59,7 @@ class WatchedViewmodel extends BaseViewModel {
   Future<void> getMovies() async {
     setIsLoading(isLoading: true);
 
-    final result = await _watchedStorage.getAll();
+    final result = await watchedStorage.getAll();
     if (result.hasError) return;
 
     final allMovies = result.data ?? [];

@@ -67,7 +67,7 @@ class _SearchMoviesHeader extends StatelessWidget {
           height: 40,
           backgroundColor: AppColors.darkBlue,
           onChanged: (value) => viewModel.onUpdateQueryTitle(title: value),
-          hintText: AppStrings.searchMovies,
+          hintText: AppStrings.generic.searchMovies,
           hintStyle: AppFonts.robotoTextSmallRegular.copyWith(
             color: AppColors.white.withOpacity(0.5),
           ),
@@ -82,7 +82,7 @@ class _SearchMoviesHeader extends StatelessWidget {
             Text(
               (viewModel.queryTitle.isEmpty)
                   ? AppStrings.trending
-                  : AppStrings.search,
+                  : AppStrings.generic.search,
               style: AppFonts.robotoTitleBigMedium,
             ),
             UIDropdownMovies(
@@ -218,7 +218,7 @@ class _MovieTile extends StatelessWidget {
                       if (!searchMovie.isWatchlist &&
                           !searchMovie.isWatched) ...[
                         _MovieCardButton(
-                          label: AppStrings.addToWatchlist,
+                          label: AppStrings.action.addToWatchlist,
                           icon: const Icon(
                             Icons.add_circle_outline,
                             size: 18,
@@ -231,7 +231,7 @@ class _MovieTile extends StatelessWidget {
                       Visibility(
                         visible: !searchMovie.isWatched,
                         child: _MovieCardButton(
-                          label: AppStrings.addToWatched,
+                          label: AppStrings.action.addToWatched,
                           icon: const Icon(
                             Icons.check_circle_outline,
                             size: 18,
@@ -311,7 +311,7 @@ class _LoadingMovieList extends StatelessWidget {
         Assets.lib.assets.tickets.image(),
         const SizedBox(height: 26),
         Text(
-          AppStrings.loadingMovies,
+          AppStrings.generic.loadingMovies,
           style: AppFonts.robotoTitleBigMedium,
         ),
       ],
@@ -332,7 +332,7 @@ class _EmptySearchMovies extends StatelessWidget {
           Assets.lib.assets.emptyPopcorn.svg(),
           const SizedBox(height: 26),
           Text(
-            AppStrings.noMoviesFound,
+            AppStrings.generic.noMoviesFound,
             style: AppFonts.robotoTitleBigMedium,
             textAlign: TextAlign.center,
           ),

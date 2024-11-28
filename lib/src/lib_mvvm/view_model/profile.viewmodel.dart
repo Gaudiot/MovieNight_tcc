@@ -1,17 +1,11 @@
 import "package:movie_night_tcc/src/base/base_view_model.dart";
-import "package:movie_night_tcc/src/base/enums/storage_collections.enum.dart";
 import "package:movie_night_tcc/src/lib_mvvm/model/entity/main_genre_watched.entity.dart";
 import "package:movie_night_tcc/src/lib_mvvm/model/entity/profile_state.entity.dart";
-import "package:movie_night_tcc/src/lib_mvvm/model/movie.storage.dart";
 import "package:movie_night_tcc/src/lib_mvvm/model/profile.transformer.dart";
+import "package:movie_night_tcc/src/lib_mvvm/model/storage/movie.storage.dart";
 import "package:movie_night_tcc/src/shared/functions/time_utils.dart";
 
 class ProfileViewmodel extends BaseViewModel {
-  final _watchedLocalStorage =
-      MovieStorage(movieCollection: StorageCollections.watched);
-  final _watchlistLocalStorage =
-      MovieStorage(movieCollection: StorageCollections.watchlist);
-
   final ProfileStateEntity _state = ProfileStateEntity();
 
   List<MainGenreWatched> get mainGenresWatched => _state.mainGenresWatched;
@@ -20,7 +14,7 @@ class ProfileViewmodel extends BaseViewModel {
   Future<void> getProfile() async {
     setIsLoading(isLoading: true);
 
-    final watchedStorageResult = await _watchedLocalStorage.getAll();
+    final watchedStorageResult = await watchedStorage.getAll();
     if (watchedStorageResult.hasError) return;
 
     final watchedMovies = watchedStorageResult.data!;
@@ -42,7 +36,7 @@ class ProfileViewmodel extends BaseViewModel {
   }
 
   Future<void> deleteUserData() async {
-    await _watchedLocalStorage.drop();
-    await _watchlistLocalStorage.drop();
+    await watchedStorage.drop();
+    await watchlistStorage.drop();
   }
 }

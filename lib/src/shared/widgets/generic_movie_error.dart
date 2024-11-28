@@ -13,7 +13,7 @@ class GenericMovieError extends StatelessWidget {
         Assets.lib.assets.ticketBooth.svg(),
         const SizedBox(height: 26),
         Text(
-          AppStrings.genericError,
+          AppStrings.generic.errorMessage,
           style: AppFonts.robotoTitleBigMedium,
         ),
       ],

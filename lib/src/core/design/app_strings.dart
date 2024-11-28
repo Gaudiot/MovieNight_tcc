@@ -3,20 +3,16 @@ enum AppLanguageEnum {
   enUs,
 }
 
-AppLanguageEnum appLanguage = AppLanguageEnum.ptBr;
+AppLanguageEnum appLanguage = AppLanguageEnum.enUs;
 
 class AppStrings {
   const AppStrings._();
 
-  static String addToWatchlist = switch (appLanguage) {
-    AppLanguageEnum.ptBr => "Planejar",
-    AppLanguageEnum.enUs => "Add Watchlist",
-  };
+  static GenericStrings generic = GenericStrings();
 
-  static String addToWatched = switch (appLanguage) {
-    AppLanguageEnum.ptBr => "Assistido",
-    AppLanguageEnum.enUs => "Add Watched",
-  };
+  static ActionStrings action = ActionStrings();
+
+  static ProfileStrings profile = ProfileStrings();
 
   static String trending = switch (appLanguage) {
     AppLanguageEnum.ptBr => "Em alta",
@@ -28,49 +24,62 @@ class AppStrings {
     AppLanguageEnum.enUs => "Watchlist",
   };
 
-  static String search = switch (appLanguage) {
-    AppLanguageEnum.ptBr => "Pesquisa",
-    AppLanguageEnum.enUs => "Search",
-  };
-
-  static ProfileStrings profile = ProfileStrings();
-
   static String watched = switch (appLanguage) {
     AppLanguageEnum.ptBr => "Assistido",
     AppLanguageEnum.enUs => "Watched",
-  };
-
-  static String searchMovies = switch (appLanguage) {
-    AppLanguageEnum.ptBr => "Pesquisar filmes...",
-    AppLanguageEnum.enUs => "Search movies...",
   };
 
   static String favorites = switch (appLanguage) {
     AppLanguageEnum.ptBr => "Favoritos",
     AppLanguageEnum.enUs => "Favorites",
   };
+}
 
-  static String emptyList = switch (appLanguage) {
-    AppLanguageEnum.ptBr => "Você não tem nenhum filme. Assista um hoje!",
-    AppLanguageEnum.enUs =>
-      "You don't have any movies. Try watching one today!",
-  };
+class GenericStrings {
+  String get emptyList => switch (appLanguage) {
+        AppLanguageEnum.ptBr => "Você não tem nenhum filme. Assista um hoje!",
+        AppLanguageEnum.enUs =>
+          "You don't have any movies. Try watching one today!",
+      };
 
-  static String genericError = switch (appLanguage) {
-    AppLanguageEnum.ptBr =>
-      "Algo inesperado aconteceu. Tente novamente mais tarde.",
-    AppLanguageEnum.enUs => "Something unexpected happened. Try again later.",
-  };
+  String get errorMessage => switch (appLanguage) {
+        AppLanguageEnum.ptBr =>
+          "Algo inesperado aconteceu. Tente novamente mais tarde.",
+        AppLanguageEnum.enUs =>
+          "Something unexpected happened. Try again later.",
+      };
 
-  static String noMoviesFound = switch (appLanguage) {
-    AppLanguageEnum.ptBr => "Desculpe, não encontramos nenhum filme.",
-    AppLanguageEnum.enUs => "Sorry, we couldn't find any movies.",
-  };
+  String get noMoviesFound => switch (appLanguage) {
+        AppLanguageEnum.ptBr => "Desculpe, não encontramos nenhum filme.",
+        AppLanguageEnum.enUs => "Sorry, we couldn't find any movies.",
+      };
 
-  static String loadingMovies = switch (appLanguage) {
-    AppLanguageEnum.ptBr => "Carregando filmes...",
-    AppLanguageEnum.enUs => "Loading movies...",
-  };
+  String get loadingMovies => switch (appLanguage) {
+        AppLanguageEnum.ptBr => "Carregando filmes...",
+        AppLanguageEnum.enUs => "Loading movies...",
+      };
+
+  String get search => switch (appLanguage) {
+        AppLanguageEnum.ptBr => "Pesquisa",
+        AppLanguageEnum.enUs => "Search",
+      };
+
+  String get searchMovies => switch (appLanguage) {
+        AppLanguageEnum.ptBr => "Pesquisar filmes...",
+        AppLanguageEnum.enUs => "Search movies...",
+      };
+}
+
+class ActionStrings {
+  String get addToWatchlist => switch (appLanguage) {
+        AppLanguageEnum.ptBr => "Planejar",
+        AppLanguageEnum.enUs => "Add Watchlist",
+      };
+
+  String get addToWatched => switch (appLanguage) {
+        AppLanguageEnum.ptBr => "Assistido",
+        AppLanguageEnum.enUs => "Add Watched",
+      };
 }
 
 class ProfileStrings {

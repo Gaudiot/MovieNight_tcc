@@ -64,7 +64,7 @@ class _WatchedHeader extends StatelessWidget {
           height: 40,
           backgroundColor: AppColors.darkBlue,
           onChanged: (value) => viewModel.onUpdateQueryTitle(title: value),
-          hintText: AppStrings.searchMovies,
+          hintText: AppStrings.generic.searchMovies,
           hintStyle: AppFonts.robotoTextSmallRegular.copyWith(
             color: AppColors.white.withOpacity(0.5),
           ),
@@ -193,7 +193,7 @@ class _LoadingMovieList extends StatelessWidget {
         Assets.lib.assets.tickets.image(),
         const SizedBox(height: 26),
         Text(
-          AppStrings.loadingMovies,
+          AppStrings.generic.loadingMovies,
           style: AppFonts.robotoTitleBigMedium,
         ),
       ],
@@ -215,7 +215,7 @@ class _EmptyMovieList extends StatelessWidget {
           Assets.lib.assets.emptyPopcorn.svg(),
           const SizedBox(height: 26),
           Text(
-            AppStrings.emptyList,
+            AppStrings.generic.emptyList,
             style: AppFonts.robotoTitleBigMedium,
             textAlign: TextAlign.center,
           ),

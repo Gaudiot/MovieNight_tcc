@@ -5,6 +5,11 @@ import "package:movie_night_tcc/src/core/locator.dart";
 import "package:movie_night_tcc/src/core/result_type.dart";
 import "package:movie_night_tcc/src/lib_mvvm/model/entity/movie.entity.dart";
 
+final watchedStorage =
+    MovieStorage(movieCollection: StorageCollections.watched);
+final watchlistStorage =
+    MovieStorage(movieCollection: StorageCollections.watchlist);
+
 class MovieStorage {
   final ILocalStorage _localStorage = locator.get<ILocalStorage>();
   final String _collectionName;

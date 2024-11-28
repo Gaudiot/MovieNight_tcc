@@ -151,7 +151,8 @@ class _GeneralProfileInfoState extends State<_GeneralProfileInfo> {
                 totalMoviesWatched: widget.totalMoviesWatched,
               ),
               _FavoriteGenre(
-                  genre: widget.mainGenresWatched.firstOrNull?.genre),
+                genre: widget.mainGenresWatched.firstOrNull?.genre,
+              ),
             ],
           ),
         ),
