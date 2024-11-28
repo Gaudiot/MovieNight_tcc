@@ -10,6 +10,8 @@ class ProfileViewmodel extends BaseViewModel {
 
   List<MainGenreWatched> get mainGenresWatched => _state.mainGenresWatched;
   ProfileStateEntity get profileState => _state;
+  List<DateInfo> get watchedTimeInfo =>
+      TimeUtils.runtimeToDateInfo(_state.totalMinutesWatched);
 
   Future<void> getProfile() async {
     setIsLoading(isLoading: true);
@@ -31,12 +33,15 @@ class ProfileViewmodel extends BaseViewModel {
     setIsLoading(isLoading: false);
   }
 
-  List<DateInfo> getWatchedTimeInfo() {
-    return TimeUtils.runtimeToDateInfo(_state.totalMinutesWatched);
-  }
-
   Future<void> deleteUserData() async {
     await watchedStorage.drop();
     await watchlistStorage.drop();
+
+    _state.updateWith(
+      totalMoviesWatched: 0,
+      totalMinutesWatched: 0,
+      mainGenresWatched: [],
+    );
+    notifyListeners();
   }
 }
