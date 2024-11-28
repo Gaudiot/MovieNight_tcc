@@ -1,6 +1,6 @@
 import "package:cached_network_image/cached_network_image.dart";
 import "package:flutter/material.dart";
-import "package:movie_night_tcc/src/shared/widgets/movie_rating.dart";
+import "package:movie_night_tcc/src/lib_mvvm/view/widgets/movie_rating.dart";
 
 class MoviePoster extends StatelessWidget {
   final String imageUrl;

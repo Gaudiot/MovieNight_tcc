@@ -5,10 +5,10 @@ import "package:movie_night_tcc/src/core/design/app_colors.dart";
 import "package:movie_night_tcc/src/core/design/app_fonts.dart";
 import "package:movie_night_tcc/src/core/design/app_strings.dart";
 import "package:movie_night_tcc/src/lib_mvvm/model/entity/movie.entity.dart";
+import "package:movie_night_tcc/src/lib_mvvm/view/widgets/movie_poster.dart";
 import "package:movie_night_tcc/src/lib_mvvm/view_model/watchlist.viewmodel.dart";
+import "package:movie_night_tcc/src/shared/components/components.dart";
 import "package:movie_night_tcc/src/shared/functions/time_utils.dart";
-import "package:movie_night_tcc/src/shared/widgets/components/components.dart";
-import "package:movie_night_tcc/src/shared/widgets/movie_poster.dart";
 
 class WatchlistView extends StatefulWidget {
   final WatchlistViewmodel viewModel = WatchlistViewmodel();

@@ -10,8 +10,8 @@ import "package:movie_night_tcc/src/core/locator.dart";
 import "package:movie_night_tcc/src/core/navigation/inavigation.dart";
 import "package:movie_night_tcc/src/lib_mvvm/model/entity/main_genre_watched.entity.dart";
 import "package:movie_night_tcc/src/lib_mvvm/view_model/profile.viewmodel.dart";
+import "package:movie_night_tcc/src/shared/components/components.dart";
 import "package:movie_night_tcc/src/shared/functions/time_utils.dart";
-import "package:movie_night_tcc/src/shared/widgets/components/components.dart";
 
 part "widgets/profile.widgets.dart";
 

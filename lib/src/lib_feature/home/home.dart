@@ -8,7 +8,7 @@ import "package:movie_night_tcc/src/core/navigation/inavigation.dart";
 import "package:movie_night_tcc/src/lib_feature/search_movies/search_movies.view.dart";
 import "package:movie_night_tcc/src/lib_feature/watched/watched.view.dart";
 import "package:movie_night_tcc/src/lib_feature/watchlist/watchlist.view.dart";
-import "package:movie_night_tcc/src/shared/widgets/components/ui_button.dart";
+import "package:movie_night_tcc/src/shared/components/ui_button.dart";
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
