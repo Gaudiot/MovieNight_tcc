@@ -1,8 +1,8 @@
-import "package:cached_network_image/cached_network_image.dart";
 import "package:flutter/material.dart";
 import "package:movie_night_tcc/gen/assets.gen.dart";
 import "package:movie_night_tcc/src/lib_mvvm/view/widgets/movie_rating.dart";
 import "package:movie_night_tcc/src/shared/components/ui_button.dart";
+import "package:movie_night_tcc/src/shared/components/ui_image.dart";
 
 class MovieBanner extends StatelessWidget {
   final String backdropUrl;
@@ -34,14 +34,7 @@ class MovieBanner extends StatelessWidget {
         clipBehavior: Clip.hardEdge,
         child: Stack(
           children: [
-            CachedNetworkImage(
-              imageUrl: backdropUrl,
-              fit: BoxFit.cover,
-              width: double.infinity,
-              height: double.infinity,
-              placeholder: (context, url) => const Placeholder(),
-              errorWidget: (context, url, error) => const Placeholder(),
-            ),
+            UIImage(imageUrl: backdropUrl),
             const SizedBox(width: 2),
             Positioned(
               right: 5,

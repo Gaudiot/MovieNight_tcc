@@ -1,6 +1,6 @@
-import "package:cached_network_image/cached_network_image.dart";
 import "package:flutter/material.dart";
 import "package:movie_night_tcc/src/lib_mvvm/view/widgets/movie_rating.dart";
+import "package:movie_night_tcc/src/shared/components/ui_image.dart";
 
 class MoviePoster extends StatelessWidget {
   final String imageUrl;
@@ -26,11 +26,7 @@ class MoviePoster extends StatelessWidget {
       child: Stack(
         alignment: Alignment.bottomRight,
         children: [
-          CachedNetworkImage(
-            imageUrl: imageUrl,
-            placeholder: (_, __) => const Placeholder(),
-            errorWidget: (_, __, ___) => const Placeholder(),
-          ),
+          UIImage(imageUrl: imageUrl),
           const SizedBox(width: 2),
           Positioned(
             right: 5,

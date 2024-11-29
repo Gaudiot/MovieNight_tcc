@@ -68,6 +68,11 @@ class GenericStrings {
         AppLanguageEnum.ptBr => "Pesquisar filmes...",
         AppLanguageEnum.enUs => "Search movies...",
       };
+
+  String get failedToLoadImage => switch (appLanguage) {
+        AppLanguageEnum.ptBr => "Falha no carregamento",
+        AppLanguageEnum.enUs => "Failed to load",
+      };
 }
 
 class ActionStrings {

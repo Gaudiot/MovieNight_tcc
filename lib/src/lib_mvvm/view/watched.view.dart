@@ -114,6 +114,7 @@ class _WatchedContent extends StatelessWidget {
 
     return Expanded(
       child: GridView.builder(
+        padding: const EdgeInsets.only(bottom: 60),
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
           childAspectRatio: 16 / 9,

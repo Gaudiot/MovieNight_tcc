@@ -4,8 +4,8 @@ import "package:movie_night_tcc/src/lib_mvvm/model/entity/movie.entity.dart";
 import "package:movie_night_tcc/src/lib_mvvm/model/entity/search_movie.entity.dart";
 import "package:movie_night_tcc/src/lib_mvvm/model/entity/search_movie_state.entity.dart";
 import "package:movie_night_tcc/src/lib_mvvm/model/movie.api.dart";
-import "package:movie_night_tcc/src/lib_mvvm/model/search_movie.transformer.dart";
 import "package:movie_night_tcc/src/lib_mvvm/model/storage/movie.storage.dart";
+import "package:movie_night_tcc/src/lib_mvvm/model/transformer/search_movie.transformer.dart";
 
 class SearchMoviesViewmodel extends BaseViewModel {
   final _movieNetwork = MovieApi();
