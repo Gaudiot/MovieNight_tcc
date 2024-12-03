@@ -1,9 +1,9 @@
 import "package:movie_night_tcc/src/base/base_view_model.dart";
 import "package:movie_night_tcc/src/base/enums/movie_genre.enum.dart";
 import "package:movie_night_tcc/src/base/enums/storage_collections.enum.dart";
-import "package:movie_night_tcc/src/lib_feature/search_movies/movie.entity.dart";
-import "package:movie_night_tcc/src/lib_feature/search_movies/movie.storage.dart";
-import "package:movie_night_tcc/src/lib_feature/watched/watched_state.entity.dart";
+import "package:movie_night_tcc/src/lib_feature/home/search_movies/movie.entity.dart";
+import "package:movie_night_tcc/src/lib_feature/home/search_movies/movie.storage.dart";
+import "package:movie_night_tcc/src/lib_feature/home/watched/watched_state.entity.dart";
 
 class WatchedViewmodel extends BaseViewModel {
   final _watchedStorage =

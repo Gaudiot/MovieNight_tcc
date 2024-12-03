@@ -4,26 +4,26 @@ import "package:movie_night_tcc/src/base/enums/movie_genre.enum.dart";
 import "package:movie_night_tcc/src/core/design/app_colors.dart";
 import "package:movie_night_tcc/src/core/design/app_fonts.dart";
 import "package:movie_night_tcc/src/core/design/app_strings.dart";
-import "package:movie_night_tcc/src/lib_feature/search_movies/search_movie.entity.dart";
-import "package:movie_night_tcc/src/lib_feature/search_movies/search_movies.viewmodel.dart";
+import "package:movie_night_tcc/src/lib_feature/home/search_movies/movie.entity.dart";
+import "package:movie_night_tcc/src/lib_feature/home/watchlist/watchlist.viewmodel.dart";
 import "package:movie_night_tcc/src/lib_mvvm/view/widgets/movie_poster.dart";
 import "package:movie_night_tcc/src/shared/components/components.dart";
 import "package:movie_night_tcc/src/shared/functions/time_utils.dart";
 
-class SearchMoviesView extends StatefulWidget {
-  final SearchMoviesViewmodel viewModel = SearchMoviesViewmodel();
+class WatchlistView extends StatefulWidget {
+  final WatchlistViewmodel viewModel = WatchlistViewmodel();
 
-  SearchMoviesView({super.key});
+  WatchlistView({super.key});
 
   @override
-  State<SearchMoviesView> createState() => _SearchMoviesViewState();
+  State<WatchlistView> createState() => _WatchlistViewState();
 }
 
-class _SearchMoviesViewState extends State<SearchMoviesView> {
+class _WatchlistViewState extends State<WatchlistView> {
   @override
   void initState() {
     super.initState();
-    widget.viewModel.fetchMovies();
+    widget.viewModel.getMovies();
   }
 
   @override
@@ -35,9 +35,9 @@ class _SearchMoviesViewState extends State<SearchMoviesView> {
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Column(
             children: [
-              _SearchMoviesHeader(viewModel: widget.viewModel),
+              _WatchlistHeader(viewModel: widget.viewModel),
               const SizedBox(height: 12),
-              _SearchMoviesContent(viewModel: widget.viewModel),
+              _WatchlistContent(viewModel: widget.viewModel),
             ],
           ),
         );
@@ -46,16 +46,16 @@ class _SearchMoviesViewState extends State<SearchMoviesView> {
   }
 }
 
-class _SearchMoviesHeader extends StatelessWidget {
-  final SearchMoviesViewmodel viewModel;
+class _WatchlistHeader extends StatelessWidget {
+  final WatchlistViewmodel viewModel;
 
-  const _SearchMoviesHeader({required this.viewModel});
+  const _WatchlistHeader({required this.viewModel});
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        UISearchBar.delayed(
+        UISearchBar(
           suffixEmptyIcon: const Icon(
             Icons.search,
             color: AppColors.white,
@@ -80,9 +80,7 @@ class _SearchMoviesHeader extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              (viewModel.queryTitle.isEmpty)
-                  ? AppStrings.trending
-                  : AppStrings.generic.search,
+              AppStrings.watchlist,
               style: AppFonts.robotoTitleBigMedium,
             ),
             UIDropdownMovies(
@@ -97,39 +95,32 @@ class _SearchMoviesHeader extends StatelessWidget {
   }
 }
 
-class _SearchMoviesContent extends StatelessWidget {
-  final SearchMoviesViewmodel viewModel;
+class _WatchlistContent extends StatelessWidget {
+  final WatchlistViewmodel viewModel;
 
-  const _SearchMoviesContent({required this.viewModel});
+  const _WatchlistContent({required this.viewModel});
 
   @override
   Widget build(BuildContext context) {
-    if (viewModel.isLoading && viewModel.movies.isEmpty) {
+    if (viewModel.isLoading) {
       return const Expanded(child: _LoadingMovieList());
     }
 
     if (viewModel.movies.isEmpty) {
-      return const _EmptySearchMovies();
+      return const _EmptyMovieList();
     }
 
     return Expanded(
       child: ListView.separated(
         padding: const EdgeInsets.only(bottom: 60),
         itemCount: viewModel.movies.length,
-        itemBuilder: (_, index) {
-          if (index == viewModel.movies.length - 5) {
-            viewModel.fetchMovies();
-          }
-          final searchMovie = viewModel.movies[index];
-
-          return _MovieTile(
-            searchMovie: searchMovie,
-            onMovieWatchlist: () =>
-                viewModel.onMovieWatchlist(movieId: searchMovie.movie.id),
-            onMovieWatched: () =>
-                viewModel.onMovieWatched(movieId: searchMovie.movie.id),
-          );
-        },
+        itemBuilder: (context, index) => _WatchlistMovieTile(
+          movie: viewModel.movies[index],
+          onMovieWatched: () =>
+              viewModel.onMovieWatched(movieId: viewModel.movies[index].id),
+          onMovieRemoved: () =>
+              viewModel.onMovieRemoved(movieId: viewModel.movies[index].id),
+        ),
         separatorBuilder: (context, index) => const Padding(
           padding: EdgeInsets.symmetric(vertical: 13),
           child: Divider(
@@ -141,27 +132,23 @@ class _SearchMoviesContent extends StatelessWidget {
   }
 }
 
-class _MovieTile extends StatelessWidget {
-  final SearchMovieEntity searchMovie;
+class _WatchlistMovieTile extends StatelessWidget {
+  final MovieModel movie;
 
-  final VoidCallback onMovieWatchlist;
   final VoidCallback onMovieWatched;
+  final VoidCallback onMovieRemoved;
 
-  const _MovieTile({
-    required this.searchMovie,
-    required this.onMovieWatchlist,
+  const _WatchlistMovieTile({
+    required this.movie,
     required this.onMovieWatched,
+    required this.onMovieRemoved,
   });
 
-  String get _releaseYear =>
-      TimeUtils.dateTimeToYear(searchMovie.movie.releaseDate);
-  String get _runtimeFormatted =>
-      TimeUtils.intToRuntime(searchMovie.movie.runtime);
+  String get _releaseYear => TimeUtils.dateTimeToYear(movie.releaseDate);
+  String get _runtimeFormatted => TimeUtils.intToRuntime(movie.runtime);
 
   @override
   Widget build(BuildContext context) {
-    final movie = searchMovie.movie;
-
     return SizedBox(
       height: 136,
       child: Row(
@@ -172,77 +159,69 @@ class _MovieTile extends StatelessWidget {
             rating: movie.rating,
           ),
           const SizedBox(width: 20),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    movie.title,
-                    style: AppFonts.robotoTitleSmallMedium,
-                    softWrap: true,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  Row(
-                    children: [
-                      Text(
-                        _releaseYear,
-                        style: AppFonts.robotoTextSmallRegular,
-                      ),
-                      const SizedBox(width: 10),
-                      Text(
-                        _runtimeFormatted,
-                        style: AppFonts.robotoTextSmallRegular,
-                      ),
-                    ],
-                  ),
-                  Wrap(
-                    spacing: 4,
-                    children: movie.genres
-                        .take(3)
-                        .map(
-                          (genre) => Text(
-                            MovieGenre.fromId(genre.id).label,
-                            style: AppFonts.robotoTextSmallRegular.copyWith(
-                              decoration: TextDecoration.underline,
-                              decorationColor: AppColors.white,
-                            ),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  movie.title,
+                  style: AppFonts.robotoTitleSmallMedium,
+                  maxLines: 2,
+                  softWrap: true,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                Row(
+                  children: [
+                    Text(
+                      _releaseYear,
+                      style: AppFonts.robotoTextSmallRegular,
+                    ),
+                    const SizedBox(width: 10),
+                    Text(
+                      _runtimeFormatted,
+                      style: AppFonts.robotoTextSmallRegular,
+                    ),
+                  ],
+                ),
+                Wrap(
+                  spacing: 4,
+                  children: movie.genres
+                      .map(
+                        (genre) => Text(
+                          MovieGenre.fromId(genre.id).label,
+                          style: AppFonts.robotoTextSmallRegular.copyWith(
+                            decoration: TextDecoration.underline,
+                            decorationColor: Colors.white,
                           ),
-                        )
-                        .toList(),
-                  ),
-                  Row(
-                    children: [
-                      if (!searchMovie.isWatchlist &&
-                          !searchMovie.isWatched) ...[
-                        _MovieCardButton(
-                          label: AppStrings.action.addToWatchlist,
-                          icon: const Icon(
-                            Icons.add_circle_outline,
-                            size: 18,
-                            color: AppColors.yellow,
-                          ),
-                          onTap: onMovieWatchlist,
                         ),
-                        const SizedBox(width: 10),
-                      ],
-                      Visibility(
-                        visible: !searchMovie.isWatched,
-                        child: _MovieCardButton(
-                          label: AppStrings.action.addToWatched,
-                          icon: const Icon(
-                            Icons.check_circle_outline,
-                            size: 18,
-                            color: AppColors.yellow,
-                          ),
-                          onTap: onMovieWatched,
-                        ),
-                      ),
-                    ],
+                      )
+                      .toList(),
+                ),
+                _MovieCardButton(
+                  label: AppStrings.action.addToWatched,
+                  icon: const Icon(
+                    Icons.check_circle_outline,
+                    size: 18,
+                    color: AppColors.yellow,
                   ),
-                ],
+                  onTap: onMovieWatched,
+                ),
+              ],
+            ),
+          ),
+          const Spacer(),
+          const SizedBox(width: 20),
+          Padding(
+            padding: const EdgeInsets.only(top: 8.0),
+            child: UIButton(
+              onTap: onMovieRemoved,
+              child: Assets.lib.assets.icTrashOutline.svg(
+                colorFilter: const ColorFilter.mode(
+                  AppColors.white,
+                  BlendMode.srcIn,
+                ),
               ),
             ),
           ),
@@ -319,8 +298,8 @@ class _LoadingMovieList extends StatelessWidget {
   }
 }
 
-class _EmptySearchMovies extends StatelessWidget {
-  const _EmptySearchMovies();
+class _EmptyMovieList extends StatelessWidget {
+  const _EmptyMovieList();
 
   @override
   Widget build(BuildContext context) {
@@ -328,11 +307,12 @@ class _EmptySearchMovies extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Assets.lib.assets.emptyPopcorn.svg(),
           const SizedBox(height: 26),
           Text(
-            AppStrings.generic.noMoviesFound,
+            AppStrings.generic.emptyList,
             style: AppFonts.robotoTitleBigMedium,
             textAlign: TextAlign.center,
           ),

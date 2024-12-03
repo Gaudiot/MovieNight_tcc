@@ -1,6 +1,6 @@
-import "package:movie_night_tcc/src/lib_feature/search_movies/movie.api.dart"
+import "package:movie_night_tcc/src/lib_feature/home/search_movies/movie.api.dart"
     as feature;
-import "package:movie_night_tcc/src/lib_feature/search_movies/movie.entity.dart"
+import "package:movie_night_tcc/src/lib_feature/home/search_movies/movie.entity.dart"
     as feature;
 import "package:movie_night_tcc/src/lib_mvvm/model/api/movie.api.dart" as mvvm;
 import "package:movie_night_tcc/src/lib_mvvm/model/entity/movie.entity.dart"
