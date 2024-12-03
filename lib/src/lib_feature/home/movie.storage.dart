@@ -3,7 +3,7 @@ import "package:movie_night_tcc/src/core/local_storage/ilocal_storage.dart";
 import "package:movie_night_tcc/src/core/local_storage/local_storage_exception.dart";
 import "package:movie_night_tcc/src/core/locator.dart";
 import "package:movie_night_tcc/src/core/result_type.dart";
-import "package:movie_night_tcc/src/lib_mvvm/model/entity/movie.entity.dart";
+import "package:movie_night_tcc/src/lib_feature/home/movie.entity.dart";
 
 final watchedStorage =
     MovieStorage(movieCollection: StorageCollections.watched);

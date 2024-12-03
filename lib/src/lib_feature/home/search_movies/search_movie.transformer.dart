@@ -1,17 +1,11 @@
-import "package:movie_night_tcc/src/base/enums/storage_collections.enum.dart";
-import "package:movie_night_tcc/src/lib_mvvm/model/entity/movie.entity.dart";
-import "package:movie_night_tcc/src/lib_mvvm/model/entity/search_movie.entity.dart";
-import "package:movie_night_tcc/src/lib_mvvm/model/storage/movie.storage.dart";
+import "package:movie_night_tcc/src/lib_feature/home/movie.entity.dart";
+import "package:movie_night_tcc/src/lib_feature/home/movie.storage.dart";
+import "package:movie_night_tcc/src/lib_feature/home/search_movies/search_movie.entity.dart";
 
 class SearchMovieTransformer {
   static Future<List<SearchMovieEntity>> fromMovieModels(
     List<MovieModel> movies,
   ) async {
-    final watchedStorage =
-        MovieStorage(movieCollection: StorageCollections.watched);
-    final watchlistStorage =
-        MovieStorage(movieCollection: StorageCollections.watchlist);
-
     final watchedMovies = await watchedStorage.getAll();
     final watchlistMovies = await watchlistStorage.getAll();
 

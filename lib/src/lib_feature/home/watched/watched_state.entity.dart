@@ -1,5 +1,5 @@
 import "package:movie_night_tcc/src/base/enums/movie_genre.enum.dart";
-import "package:movie_night_tcc/src/lib_mvvm/model/entity/movie.entity.dart";
+import "package:movie_night_tcc/src/lib_feature/home/movie.entity.dart";
 
 class WatchedStateEntity {
   List<MovieModel> movies;

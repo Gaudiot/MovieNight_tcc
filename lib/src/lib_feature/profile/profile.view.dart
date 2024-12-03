@@ -8,8 +8,8 @@ import "package:movie_night_tcc/src/core/design/app_strings.dart";
 import "package:movie_night_tcc/src/core/extensions/list_extensions.dart";
 import "package:movie_night_tcc/src/core/locator.dart";
 import "package:movie_night_tcc/src/core/navigation/inavigation.dart";
-import "package:movie_night_tcc/src/lib_mvvm/model/entity/main_genre_watched.entity.dart";
-import "package:movie_night_tcc/src/lib_mvvm/view_model/profile.viewmodel.dart";
+import "package:movie_night_tcc/src/lib_feature/profile/main_genre_watched.entity.dart";
+import "package:movie_night_tcc/src/lib_feature/profile/profile.viewmodel.dart";
 import "package:movie_night_tcc/src/shared/components/components.dart";
 import "package:movie_night_tcc/src/shared/functions/time_utils.dart";
 

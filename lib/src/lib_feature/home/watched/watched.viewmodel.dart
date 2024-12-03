@@ -1,8 +1,8 @@
 import "package:movie_night_tcc/src/base/base_view_model.dart";
 import "package:movie_night_tcc/src/base/enums/movie_genre.enum.dart";
-import "package:movie_night_tcc/src/lib_mvvm/model/entity/movie.entity.dart";
-import "package:movie_night_tcc/src/lib_mvvm/model/entity/watched_state.entity.dart";
-import "package:movie_night_tcc/src/lib_mvvm/model/storage/movie.storage.dart";
+import "package:movie_night_tcc/src/lib_feature/home/movie.entity.dart";
+import "package:movie_night_tcc/src/lib_feature/home/movie.storage.dart";
+import "package:movie_night_tcc/src/lib_feature/home/watched/watched_state.entity.dart";
 
 class WatchedViewmodel extends BaseViewModel {
   final WatchedStateEntity _state = WatchedStateEntity();

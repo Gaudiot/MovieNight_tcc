@@ -1,5 +1,5 @@
 import "package:flutter/material.dart";
-import "package:movie_night_tcc/src/lib_mvvm/view/widgets/movie_rating.dart";
+import "package:movie_night_tcc/src/lib_feature/home/widgets/movie_rating.dart";
 import "package:movie_night_tcc/src/shared/components/ui_image.dart";
 
 class MoviePoster extends StatelessWidget {

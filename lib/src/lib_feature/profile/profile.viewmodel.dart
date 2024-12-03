@@ -1,8 +1,8 @@
 import "package:movie_night_tcc/src/base/base_view_model.dart";
-import "package:movie_night_tcc/src/lib_mvvm/model/entity/main_genre_watched.entity.dart";
-import "package:movie_night_tcc/src/lib_mvvm/model/entity/profile_state.entity.dart";
-import "package:movie_night_tcc/src/lib_mvvm/model/storage/movie.storage.dart";
-import "package:movie_night_tcc/src/lib_mvvm/model/transformer/profile.transformer.dart";
+import "package:movie_night_tcc/src/lib_feature/home/movie.storage.dart";
+import "package:movie_night_tcc/src/lib_feature/profile/main_genre_watched.entity.dart";
+import "package:movie_night_tcc/src/lib_feature/profile/profile.transformer.dart";
+import "package:movie_night_tcc/src/lib_feature/profile/profile_state.entity.dart";
 import "package:movie_night_tcc/src/shared/functions/time_utils.dart";
 
 class ProfileViewmodel extends BaseViewModel {

@@ -4,9 +4,9 @@ import "package:movie_night_tcc/src/base/enums/movie_genre.enum.dart";
 import "package:movie_night_tcc/src/core/design/app_colors.dart";
 import "package:movie_night_tcc/src/core/design/app_fonts.dart";
 import "package:movie_night_tcc/src/core/design/app_strings.dart";
-import "package:movie_night_tcc/src/lib_mvvm/model/entity/search_movie.entity.dart";
-import "package:movie_night_tcc/src/lib_mvvm/view/widgets/movie_poster.dart";
-import "package:movie_night_tcc/src/lib_mvvm/view_model/search_movies.viewmodel.dart";
+import "package:movie_night_tcc/src/lib_feature/home/search_movies/search_movie.entity.dart";
+import "package:movie_night_tcc/src/lib_feature/home/search_movies/search_movies.viewmodel.dart";
+import "package:movie_night_tcc/src/lib_feature/home/widgets/movie_poster.dart";
 import "package:movie_night_tcc/src/shared/components/components.dart";
 import "package:movie_night_tcc/src/shared/functions/time_utils.dart";
 
