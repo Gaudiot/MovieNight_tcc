@@ -1,19 +1,14 @@
 import "package:movie_night_tcc/src/base/base_view_model.dart";
 import "package:movie_night_tcc/src/base/enums/movie_genre.enum.dart";
-import "package:movie_night_tcc/src/base/enums/storage_collections.enum.dart";
-import "package:movie_night_tcc/src/lib_feature/home/search_movies/movie.api.dart";
-import "package:movie_night_tcc/src/lib_feature/home/search_movies/movie.entity.dart";
-import "package:movie_night_tcc/src/lib_feature/home/search_movies/movie.storage.dart";
-import "package:movie_night_tcc/src/lib_feature/home/search_movies/search_movie.entity.dart";
-import "package:movie_night_tcc/src/lib_feature/home/search_movies/search_movie.transformer.dart";
-import "package:movie_night_tcc/src/lib_feature/home/search_movies/search_movie_state.entity.dart";
+import "package:movie_night_tcc/src/lib_mvvm/model/api/movie.api.dart";
+import "package:movie_night_tcc/src/lib_mvvm/model/entity/movie.entity.dart";
+import "package:movie_night_tcc/src/lib_mvvm/model/entity/search_movie.entity.dart";
+import "package:movie_night_tcc/src/lib_mvvm/model/entity/search_movie_state.entity.dart";
+import "package:movie_night_tcc/src/lib_mvvm/model/storage/movie.storage.dart";
+import "package:movie_night_tcc/src/lib_mvvm/model/transformer/search_movie.transformer.dart";
 
 class SearchMoviesViewmodel extends BaseViewModel {
   final _movieNetwork = MovieApi();
-  final watchlistLocalStorage =
-      MovieStorage(movieCollection: StorageCollections.watchlist);
-  final watchedLocalStorage =
-      MovieStorage(movieCollection: StorageCollections.watched);
 
   final SearchMovieStateEntity _state = SearchMovieStateEntity();
 
@@ -43,7 +38,7 @@ class SearchMoviesViewmodel extends BaseViewModel {
         _state.movies.indexWhere((movie) => movie.movie.id == movieId);
     if (movieIndex == -1) return;
 
-    final isSaved = await watchlistLocalStorage.save(
+    final isSaved = await watchlistStorage.save(
       movie: _state.movies[movieIndex].movie,
     );
     if (isSaved.hasError || isSaved.data == false) return;
@@ -59,12 +54,12 @@ class SearchMoviesViewmodel extends BaseViewModel {
         _state.movies.indexWhere((movie) => movie.movie.id == movieId);
     if (movieIndex == -1) return;
 
-    final isDeleted = await watchlistLocalStorage.delete(
+    final isDeleted = await watchlistStorage.delete(
       movieId: movieId,
     );
     if (isDeleted.hasError || isDeleted.data == false) return;
 
-    final isSaved = await watchedLocalStorage.save(
+    final isSaved = await watchedStorage.save(
       movie: _state.movies[movieIndex].movie,
     );
     if (isSaved.hasError || isSaved.data == false) return;

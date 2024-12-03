@@ -1,4 +1,4 @@
-import "package:movie_night_tcc/src/lib_feature/profile/main_genre_watched.entity.dart";
+import "package:movie_night_tcc/src/lib_mvvm/model/entity/main_genre_watched.entity.dart";
 
 class ProfileStateEntity {
   int totalMoviesWatched;

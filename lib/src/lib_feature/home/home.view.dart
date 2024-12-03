@@ -5,9 +5,9 @@ import "package:movie_night_tcc/src/base/widgets/base_wrapper.dart";
 import "package:movie_night_tcc/src/core/design/app_colors.dart";
 import "package:movie_night_tcc/src/core/locator.dart";
 import "package:movie_night_tcc/src/core/navigation/inavigation.dart";
-import "package:movie_night_tcc/src/lib_feature/home/search_movies/search_movies.view.dart";
-import "package:movie_night_tcc/src/lib_feature/home/watched/watched.view.dart";
-import "package:movie_night_tcc/src/lib_feature/home/watchlist/watchlist.view.dart";
+import "package:movie_night_tcc/src/lib_mvvm/view/search_movies.view.dart";
+import "package:movie_night_tcc/src/lib_mvvm/view/watched.view.dart";
+import "package:movie_night_tcc/src/lib_mvvm/view/watchlist.view.dart";
 import "package:movie_night_tcc/src/shared/components/ui_button.dart";
 
 class HomeView extends StatefulWidget {

@@ -1,5 +1,5 @@
 import "package:movie_night_tcc/src/base/enums/movie_genre.enum.dart";
-import "package:movie_night_tcc/src/lib_feature/home/search_movies/search_movie.entity.dart";
+import "package:movie_night_tcc/src/lib_mvvm/model/entity/search_movie.entity.dart";
 
 class SearchMovieStateEntity {
   List<SearchMovieEntity> movies;

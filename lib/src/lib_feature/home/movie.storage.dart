@@ -3,7 +3,12 @@ import "package:movie_night_tcc/src/core/local_storage/ilocal_storage.dart";
 import "package:movie_night_tcc/src/core/local_storage/local_storage_exception.dart";
 import "package:movie_night_tcc/src/core/locator.dart";
 import "package:movie_night_tcc/src/core/result_type.dart";
-import "package:movie_night_tcc/src/lib_feature/home/search_movies/movie.entity.dart";
+import "package:movie_night_tcc/src/lib_mvvm/model/entity/movie.entity.dart";
+
+final watchedStorage =
+    MovieStorage(movieCollection: StorageCollections.watched);
+final watchlistStorage =
+    MovieStorage(movieCollection: StorageCollections.watchlist);
 
 class MovieStorage {
   final ILocalStorage _localStorage = locator.get<ILocalStorage>();

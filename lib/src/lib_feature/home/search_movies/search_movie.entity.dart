@@ -1,4 +1,4 @@
-import "package:movie_night_tcc/src/lib_feature/home/search_movies/movie.entity.dart";
+import "package:movie_night_tcc/src/lib_mvvm/model/entity/movie.entity.dart";
 
 class SearchMovieEntity {
   final MovieModel movie;
