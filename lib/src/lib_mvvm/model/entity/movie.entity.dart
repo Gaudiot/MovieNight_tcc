@@ -32,6 +32,17 @@ class MovieModel {
     this.favorite = false,
   });
 
+  MovieModel.empty()
+      : this(
+          tmdbId: 0,
+          title: "",
+          synopsis: "",
+          releaseDate: DateTime.now(),
+          rating: 0,
+          runtime: 0,
+          genres: [],
+        );
+
   factory MovieModel.fromJson(Map<String, dynamic> json) =>
       _$MovieModelFromJson(json);
 

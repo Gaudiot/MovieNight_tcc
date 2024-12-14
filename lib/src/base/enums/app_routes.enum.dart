@@ -1,6 +1,7 @@
 enum AppRoutes {
+  home(path: "/"),
   profile(path: "/profile"),
-  home(path: "/");
+  details(path: "/details/:movieId");
 
   final String path;
 

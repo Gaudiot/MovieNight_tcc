@@ -1,9 +1,12 @@
 import "package:flutter/material.dart";
 import "package:movie_night_tcc/gen/assets.gen.dart";
+import "package:movie_night_tcc/src/base/enums/app_routes.enum.dart";
 import "package:movie_night_tcc/src/base/enums/movie_genre.enum.dart";
 import "package:movie_night_tcc/src/core/design/app_colors.dart";
 import "package:movie_night_tcc/src/core/design/app_fonts.dart";
 import "package:movie_night_tcc/src/core/design/app_strings.dart";
+import "package:movie_night_tcc/src/core/locator.dart";
+import "package:movie_night_tcc/src/core/navigation/inavigation.dart";
 import "package:movie_night_tcc/src/lib_mvvm/model/entity/movie.entity.dart";
 import "package:movie_night_tcc/src/lib_mvvm/view/widgets/movie_poster.dart";
 import "package:movie_night_tcc/src/lib_mvvm/view_model/watchlist.viewmodel.dart";
@@ -102,6 +105,7 @@ class _WatchlistContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final navigation = locator.get<INavigation>();
     if (viewModel.isLoading) {
       return const Expanded(child: _LoadingMovieList());
     }
@@ -114,12 +118,21 @@ class _WatchlistContent extends StatelessWidget {
       child: ListView.separated(
         padding: const EdgeInsets.only(bottom: 60),
         itemCount: viewModel.movies.length,
-        itemBuilder: (context, index) => _WatchlistMovieTile(
-          movie: viewModel.movies[index],
-          onMovieWatched: () =>
-              viewModel.onMovieWatched(movieId: viewModel.movies[index].id),
-          onMovieRemoved: () =>
-              viewModel.onMovieRemoved(movieId: viewModel.movies[index].id),
+        itemBuilder: (context, index) => GestureDetector(
+          onTap: () => navigation.push(
+            path: AppRoutes.details,
+            pathParameters: {
+              "movieId": viewModel.movies[index].id,
+            },
+            data: viewModel.movies[index],
+          ),
+          child: _WatchlistMovieTile(
+            movie: viewModel.movies[index],
+            onMovieWatched: () =>
+                viewModel.onMovieWatched(movieId: viewModel.movies[index].id),
+            onMovieRemoved: () =>
+                viewModel.onMovieRemoved(movieId: viewModel.movies[index].id),
+          ),
         ),
         separatorBuilder: (context, index) => const Padding(
           padding: EdgeInsets.symmetric(vertical: 13),

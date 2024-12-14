@@ -4,6 +4,9 @@ import "package:movie_night_tcc/src/core/navigation/inavigation.dart";
 import "package:movie_night_tcc/src/lib_feature/home/home.view.dart" as feature;
 import "package:movie_night_tcc/src/lib_feature/profile/profile.view.dart"
     as feature;
+import "package:movie_night_tcc/src/lib_mvvm/model/entity/movie.entity.dart"
+    as mvvm;
+import "package:movie_night_tcc/src/lib_mvvm/view/details.view.dart" as mvvm;
 import "package:movie_night_tcc/src/lib_mvvm/view/home.view.dart" as mvvm;
 import "package:movie_night_tcc/src/lib_mvvm/view/profile.view.dart" as mvvm;
 
@@ -16,12 +19,22 @@ final _goRouterMvvm = GoRouter(
   initialLocation: AppRoutes.home.path,
   routes: [
     GoRoute(
+      name: AppRoutes.home.name,
       path: AppRoutes.home.path,
       builder: (context, state) => const mvvm.HomeView(),
     ),
     GoRoute(
+      name: AppRoutes.profile.name,
       path: AppRoutes.profile.path,
       builder: (context, state) => mvvm.ProfileView(),
+    ),
+    GoRoute(
+      name: AppRoutes.details.name,
+      path: AppRoutes.details.path,
+      builder: (context, state) => mvvm.DetailsView(
+        movieId: state.pathParameters["movieId"]!,
+        movie: state.extra as mvvm.MovieModel?,
+      ),
     ),
   ],
 );
@@ -56,8 +69,16 @@ class GoRouterNavigation implements INavigation {
   }
 
   @override
-  void push({required AppRoutes path}) {
-    routerConfig.push(path.path);
+  void push({
+    required AppRoutes path,
+    Map<String, String> pathParameters = const {},
+    Object? data,
+  }) {
+    routerConfig.pushNamed(
+      path.name,
+      pathParameters: pathParameters,
+      extra: data,
+    );
   }
 
   @override

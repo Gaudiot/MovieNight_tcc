@@ -1,9 +1,12 @@
 import "package:flutter/material.dart";
 import "package:movie_night_tcc/gen/assets.gen.dart";
+import "package:movie_night_tcc/src/base/enums/app_routes.enum.dart";
 import "package:movie_night_tcc/src/base/enums/movie_genre.enum.dart";
 import "package:movie_night_tcc/src/core/design/app_colors.dart";
 import "package:movie_night_tcc/src/core/design/app_fonts.dart";
 import "package:movie_night_tcc/src/core/design/app_strings.dart";
+import "package:movie_night_tcc/src/core/locator.dart";
+import "package:movie_night_tcc/src/core/navigation/inavigation.dart";
 import "package:movie_night_tcc/src/lib_mvvm/model/entity/search_movie.entity.dart";
 import "package:movie_night_tcc/src/lib_mvvm/view/widgets/movie_poster.dart";
 import "package:movie_night_tcc/src/lib_mvvm/view_model/search_movies.viewmodel.dart";
@@ -104,6 +107,8 @@ class _SearchMoviesContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final navigation = locator.get<INavigation>();
+
     if (viewModel.isLoading && viewModel.movies.isEmpty) {
       return const Expanded(child: _LoadingMovieList());
     }
@@ -122,12 +127,21 @@ class _SearchMoviesContent extends StatelessWidget {
           }
           final searchMovie = viewModel.movies[index];
 
-          return _MovieTile(
-            searchMovie: searchMovie,
-            onMovieWatchlist: () =>
-                viewModel.onMovieWatchlist(movieId: searchMovie.movie.id),
-            onMovieWatched: () =>
-                viewModel.onMovieWatched(movieId: searchMovie.movie.id),
+          return GestureDetector(
+            onTap: () => navigation.push(
+              path: AppRoutes.details,
+              pathParameters: {
+                "movieId": searchMovie.movie.id,
+              },
+              data: searchMovie.movie,
+            ),
+            child: _MovieTile(
+              searchMovie: searchMovie,
+              onMovieWatchlist: () =>
+                  viewModel.onMovieWatchlist(movieId: searchMovie.movie.id),
+              onMovieWatched: () =>
+                  viewModel.onMovieWatched(movieId: searchMovie.movie.id),
+            ),
           );
         },
         separatorBuilder: (context, index) => const Padding(

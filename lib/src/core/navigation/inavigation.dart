@@ -5,6 +5,10 @@ abstract class INavigation {
   RouterConfig<Object> get routerConfig;
 
   void goto({required AppRoutes path});
-  void push({required AppRoutes path});
+  void push({
+    required AppRoutes path,
+    Map<String, String> pathParameters = const {},
+    Object? data,
+  });
   void pop();
 }
