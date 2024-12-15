@@ -14,6 +14,8 @@ class AppStrings {
 
   static ProfileStrings profile = ProfileStrings();
 
+  static DetailsStrings details = DetailsStrings();
+
   static String trending = switch (appLanguage) {
     AppLanguageEnum.ptBr => "Em alta",
     AppLanguageEnum.enUs => "Trending",
@@ -141,5 +143,12 @@ class ProfileStrings {
   String minutes(int value) => switch (appLanguage) {
         AppLanguageEnum.ptBr => value == 1 ? "minuto" : "minutos",
         AppLanguageEnum.enUs => value == 1 ? "minute" : "minutes",
+      };
+}
+
+class DetailsStrings {
+  String get synopsis => switch (appLanguage) {
+        AppLanguageEnum.ptBr => "Sinopse",
+        AppLanguageEnum.enUs => "Synopsis",
       };
 }

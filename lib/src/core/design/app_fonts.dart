@@ -2,6 +2,12 @@ import "package:flutter/widgets.dart";
 import "package:movie_night_tcc/src/core/design/app_colors.dart";
 
 class AppFonts {
+  static TextStyle robotoTextSmallerRegular = const TextStyle(
+    fontSize: 10,
+    fontWeight: FontWeight.normal,
+    color: AppColors.white,
+  );
+
   static TextStyle robotoTextSmallerBold = const TextStyle(
     fontSize: 10,
     fontWeight: FontWeight.bold,

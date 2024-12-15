@@ -1,8 +1,11 @@
 import "package:flutter/material.dart";
 import "package:movie_night_tcc/gen/assets.gen.dart";
+import "package:movie_night_tcc/src/base/enums/app_routes.enum.dart";
 import "package:movie_night_tcc/src/core/design/app_colors.dart";
 import "package:movie_night_tcc/src/core/design/app_fonts.dart";
 import "package:movie_night_tcc/src/core/design/app_strings.dart";
+import "package:movie_night_tcc/src/core/locator.dart";
+import "package:movie_night_tcc/src/core/navigation/inavigation.dart";
 import "package:movie_night_tcc/src/lib_mvvm/view/widgets/movie_banner.dart";
 import "package:movie_night_tcc/src/lib_mvvm/view_model/watched.viewmodel.dart";
 import "package:movie_night_tcc/src/shared/components/components.dart";
@@ -104,6 +107,8 @@ class _WatchedContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final navigation = locator.get<INavigation>();
+
     if (viewModel.isLoading) {
       return const Expanded(child: _LoadingMovieList());
     }
@@ -125,14 +130,23 @@ class _WatchedContent extends StatelessWidget {
         itemBuilder: (_, index) {
           final movie = viewModel.movies[index];
 
-          return MovieBanner(
-            backdropUrl: movie.backdropUrl!,
-            rating: movie.rating,
-            isFavorite: movie.favorite,
-            onRemove: () => viewModel.onMovieRemoved(movieId: movie.id),
-            onToggleFavorite: () => viewModel.onMovieFavorite(
-              movieId: movie.id,
+          return GestureDetector(
+            onTap: () => navigation.push(
+              path: AppRoutes.details,
+              pathParameters: {
+                "movieId": movie.id,
+              },
+              data: movie,
+            ),
+            child: MovieBanner(
+              backdropUrl: movie.backdropUrl!,
+              rating: movie.rating,
               isFavorite: movie.favorite,
+              onRemove: () => viewModel.onMovieRemoved(movieId: movie.id),
+              onToggleFavorite: () => viewModel.onMovieFavorite(
+                movieId: movie.id,
+                isFavorite: movie.favorite,
+              ),
             ),
           );
         },
