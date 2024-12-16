@@ -30,8 +30,6 @@ class SharedPreferencesAsyncStorage extends ILocalStorage {
   Future<void> init() async {
     SharedPreferences.setPrefix("uniqueAppId");
 
-    await runMigrations();
-
     final keys = await _storage.getKeys();
     _collections = keys.fold<Map<String, List<String>>>(
       {},
@@ -44,12 +42,6 @@ class SharedPreferencesAsyncStorage extends ILocalStorage {
         return keys;
       },
     );
-    super.init();
-  }
-
-  @override
-  Future<void> runMigrations() async {
-    // No migrations needed
   }
 
   @override
