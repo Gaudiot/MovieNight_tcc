@@ -1,7 +1,11 @@
 import "package:go_router/go_router.dart";
 import "package:movie_night_tcc/src/base/enums/app_routes.enum.dart";
 import "package:movie_night_tcc/src/core/navigation/inavigation.dart";
+import "package:movie_night_tcc/src/lib_feature/details/details.view.dart"
+    as feature;
 import "package:movie_night_tcc/src/lib_feature/home/home.view.dart" as feature;
+import "package:movie_night_tcc/src/lib_feature/home/movie.entity.dart"
+    as feature;
 import "package:movie_night_tcc/src/lib_feature/profile/profile.view.dart"
     as feature;
 import "package:movie_night_tcc/src/lib_mvvm/model/entity/movie.entity.dart"
@@ -50,12 +54,20 @@ final _goRouterFeatureBased = GoRouter(
       path: AppRoutes.profile.path,
       builder: (context, state) => feature.ProfileView(),
     ),
+    GoRoute(
+      name: AppRoutes.details.name,
+      path: AppRoutes.details.path,
+      builder: (context, state) => feature.DetailsView(
+        movieId: state.pathParameters["movieId"]!,
+        movie: state.extra as feature.MovieModel?,
+      ),
+    ),
   ],
 );
 
 class GoRouterNavigation implements INavigation {
-  static const appType = AppType.mvvmDefault;
-  // static const appType = AppType.featureBased;
+  // static const appType = AppType.mvvmDefault;
+  static const appType = AppType.featureBased;
 
   @override
   GoRouter get routerConfig => switch (appType) {
