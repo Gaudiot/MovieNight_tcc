@@ -47,10 +47,12 @@ final _goRouterFeatureBased = GoRouter(
   initialLocation: AppRoutes.home.path,
   routes: [
     GoRoute(
+      name: AppRoutes.home.name,
       path: AppRoutes.home.path,
       builder: (context, state) => const feature.HomeView(),
     ),
     GoRoute(
+      name: AppRoutes.profile.name,
       path: AppRoutes.profile.path,
       builder: (context, state) => feature.ProfileView(),
     ),
