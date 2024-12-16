@@ -2,11 +2,8 @@ import "package:movie_night_tcc/src/core/local_storage/local_storage_exception.d
 import "package:movie_night_tcc/src/core/result_type.dart";
 
 abstract class ILocalStorage {
-  Future<void> init() async {
-    await runMigrations();
-  }
+  Future<void> init();
 
-  Future<void> runMigrations();
   Future<Result<bool, LocalStorageException>> save<T>({
     required String collection,
     required String key,
