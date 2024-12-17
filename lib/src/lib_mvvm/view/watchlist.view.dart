@@ -8,6 +8,7 @@ import "package:movie_night_tcc/src/core/design/app_strings.dart";
 import "package:movie_night_tcc/src/core/locator.dart";
 import "package:movie_night_tcc/src/core/navigation/inavigation.dart";
 import "package:movie_night_tcc/src/lib_mvvm/model/entity/movie.entity.dart";
+import "package:movie_night_tcc/src/lib_mvvm/view/skeletons/watchlist.skeleton.dart";
 import "package:movie_night_tcc/src/lib_mvvm/view/widgets/movie_poster.dart";
 import "package:movie_night_tcc/src/lib_mvvm/view_model/watchlist.viewmodel.dart";
 import "package:movie_night_tcc/src/shared/components/components.dart";
@@ -40,7 +41,11 @@ class _WatchlistViewState extends State<WatchlistView> {
             children: [
               _WatchlistHeader(viewModel: widget.viewModel),
               const SizedBox(height: 12),
-              _WatchlistContent(viewModel: widget.viewModel),
+              Visibility(
+                visible: !widget.viewModel.isLoading,
+                replacement: const Expanded(child: WatchlistSkeleton()),
+                child: _WatchlistContent(viewModel: widget.viewModel),
+              ),
             ],
           ),
         );

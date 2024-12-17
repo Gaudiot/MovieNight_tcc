@@ -8,6 +8,7 @@ import "package:movie_night_tcc/src/core/design/app_strings.dart";
 import "package:movie_night_tcc/src/core/locator.dart";
 import "package:movie_night_tcc/src/core/navigation/inavigation.dart";
 import "package:movie_night_tcc/src/lib_mvvm/model/entity/search_movie.entity.dart";
+import "package:movie_night_tcc/src/lib_mvvm/view/skeletons/search_movies.skeleton.dart";
 import "package:movie_night_tcc/src/lib_mvvm/view/widgets/movie_poster.dart";
 import "package:movie_night_tcc/src/lib_mvvm/view_model/search_movies.viewmodel.dart";
 import "package:movie_night_tcc/src/shared/components/components.dart";
@@ -34,6 +35,10 @@ class _SearchMoviesViewState extends State<SearchMoviesView> {
     return ListenableBuilder(
       listenable: widget.viewModel,
       builder: (context, _) {
+        if (widget.viewModel.isLoading) {
+          return const SearchMoviesSkeleton();
+        }
+
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Column(
