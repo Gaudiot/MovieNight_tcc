@@ -35,10 +35,6 @@ class _SearchMoviesViewState extends State<SearchMoviesView> {
     return ListenableBuilder(
       listenable: widget.viewModel,
       builder: (context, _) {
-        if (widget.viewModel.isLoading) {
-          return const SearchMoviesSkeleton();
-        }
-
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Column(
@@ -118,15 +114,18 @@ class _SearchMoviesContent extends StatelessWidget {
       return const Expanded(child: _LoadingMovieList());
     }
 
-    if (viewModel.movies.isEmpty) {
+    if (viewModel.movies.isEmpty && !viewModel.isLoading) {
       return const _EmptySearchMovies();
     }
 
     return Expanded(
       child: ListView.separated(
         padding: const EdgeInsets.only(bottom: 60),
-        itemCount: viewModel.movies.length,
+        itemCount: viewModel.movies.length + (viewModel.isLoading ? 1 : 0),
         itemBuilder: (_, index) {
+          if (index >= viewModel.movies.length) {
+            return const SearchMoviesSkeleton();
+          }
           if (index == viewModel.movies.length - 5) {
             viewModel.fetchMovies();
           }

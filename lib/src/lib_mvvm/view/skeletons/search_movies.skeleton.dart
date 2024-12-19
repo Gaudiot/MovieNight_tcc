@@ -2,7 +2,6 @@ import "package:flutter/material.dart";
 import "package:movie_night_tcc/src/core/design/app_colors.dart";
 import "package:movie_night_tcc/src/core/design/app_fonts.dart";
 import "package:movie_night_tcc/src/shared/components/skeletons/skeletons.dart";
-import "package:movie_night_tcc/src/shared/components/ui_search_bar.dart";
 import "package:shimmer/shimmer.dart";
 
 class SearchMoviesSkeleton extends StatelessWidget {
@@ -14,48 +13,7 @@ class SearchMoviesSkeleton extends StatelessWidget {
       period: const Duration(milliseconds: 2500),
       baseColor: AppColors.gray,
       highlightColor: Colors.white,
-      child: const Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16),
-        child: Column(
-          children: [
-            _SearchMoviesHeaderSkeleton(),
-            SizedBox(height: 12),
-            Expanded(child: _SearchMoviesContentSkeleton()),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _SearchMoviesHeaderSkeleton extends StatelessWidget {
-  const _SearchMoviesHeaderSkeleton();
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        UISearchBar(onChanged: (_) {}),
-        const SizedBox(height: 12),
-        Row(
-          children: [
-            TextSkeleton(
-              text: "Watchlist",
-              style: AppFonts.robotoTitleBigMedium,
-            ),
-            const Spacer(),
-            Container(
-              height: 35,
-              width: 94,
-              decoration: const ShapeDecoration(
-                color: AppColors.black,
-                shape: StadiumBorder(),
-              ),
-            ),
-          ],
-        ),
-      ],
+      child: const Expanded(child: _SearchMoviesContentSkeleton()),
     );
   }
 }
@@ -66,8 +24,9 @@ class _SearchMoviesContentSkeleton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
+      shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      itemCount: 20,
+      itemCount: 5,
       itemBuilder: (_, __) {
         return const _MovieTileSkeleton();
       },
