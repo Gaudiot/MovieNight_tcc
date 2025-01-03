@@ -37,6 +37,7 @@ class MovieApi {
       queryParameters: {
         "query": request.title,
         "page": request.page.toString(),
+        "language": "pt-BR",
       },
     );
   }
@@ -44,6 +45,11 @@ class MovieApi {
   Future<Result<GetMovieDetailsResponse, NetworkException>> getMovieDetails({
     required GetMovieDetailsRequest request,
   }) async {
-    return _network.get<GetMovieDetailsResponse>(path: "/movie/${request.id}");
+    return _network.get<GetMovieDetailsResponse>(
+      path: "/movie/${request.id}",
+      queryParameters: {
+        "language": "pt-BR",
+      },
+    );
   }
 }
