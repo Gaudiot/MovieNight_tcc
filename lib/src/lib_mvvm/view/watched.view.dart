@@ -6,6 +6,7 @@ import "package:movie_night_tcc/src/core/design/app_fonts.dart";
 import "package:movie_night_tcc/src/core/design/app_strings.dart";
 import "package:movie_night_tcc/src/core/locator.dart";
 import "package:movie_night_tcc/src/core/navigation/inavigation.dart";
+import "package:movie_night_tcc/src/lib_mvvm/view/skeletons/watched.skeleton.dart";
 import "package:movie_night_tcc/src/lib_mvvm/view/widgets/movie_banner.dart";
 import "package:movie_night_tcc/src/lib_mvvm/view_model/watched.viewmodel.dart";
 import "package:movie_night_tcc/src/shared/components/components.dart";
@@ -37,7 +38,11 @@ class _WatchedViewState extends State<WatchedView> {
             children: [
               _WatchedHeader(viewModel: widget.viewModel),
               const SizedBox(height: 12),
-              _WatchedContent(viewModel: widget.viewModel),
+              Visibility(
+                visible: !widget.viewModel.isLoading,
+                replacement: const Expanded(child: WatchedSkeleton()),
+                child: _WatchedContent(viewModel: widget.viewModel),
+              ),
             ],
           ),
         );

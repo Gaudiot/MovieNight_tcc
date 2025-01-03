@@ -3,6 +3,7 @@ import "package:flutter/material.dart";
 import "package:movie_night_tcc/src/core/design/app_colors.dart";
 import "package:movie_night_tcc/src/core/design/app_fonts.dart";
 import "package:movie_night_tcc/src/core/design/app_strings.dart";
+import "package:shimmer/shimmer.dart";
 
 class UIImage extends StatelessWidget {
   final String imageUrl;
@@ -30,11 +31,16 @@ class _LoadingImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const ColoredBox(
-      color: AppColors.gray,
-      child: Center(
-        child: CircularProgressIndicator(
-          color: AppColors.yellow,
+    return Shimmer.fromColors(
+      period: const Duration(milliseconds: 1500),
+      baseColor: AppColors.gray,
+      highlightColor: Colors.white,
+      child: const ColoredBox(
+        color: AppColors.gray,
+        child: Center(
+          child: CircularProgressIndicator(
+            color: AppColors.yellow,
+          ),
         ),
       ),
     );
