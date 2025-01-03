@@ -10,6 +10,7 @@ import "package:movie_night_tcc/src/core/locator.dart";
 import "package:movie_night_tcc/src/core/navigation/inavigation.dart";
 import "package:movie_night_tcc/src/lib_feature/profile/main_genre_watched.entity.dart";
 import "package:movie_night_tcc/src/lib_feature/profile/profile.viewmodel.dart";
+import "package:movie_night_tcc/src/lib_feature/profile/ui/profile.skeleton.dart";
 import "package:movie_night_tcc/src/shared/components/components.dart";
 import "package:movie_night_tcc/src/shared/functions/time_utils.dart";
 
@@ -39,6 +40,10 @@ class _ProfileViewState extends State<ProfileView> {
       child: ListenableBuilder(
         listenable: widget.viewModel,
         builder: (context, _) {
+          if (widget.viewModel.isLoading) {
+            return const ProfileSkeleton();
+          }
+
           return Padding(
             padding: const EdgeInsets.fromLTRB(32, 0, 32, 24),
             child: Column(
