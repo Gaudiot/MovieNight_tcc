@@ -3,7 +3,7 @@ enum AppLanguageEnum {
   enUs,
 }
 
-AppLanguageEnum appLanguage = AppLanguageEnum.enUs;
+AppLanguageEnum appLanguage = AppLanguageEnum.ptBr;
 
 class AppStrings {
   const AppStrings._();
