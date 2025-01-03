@@ -6,7 +6,7 @@ import "package:movie_night_tcc/src/lib_feature/details/details.view.dart"
 import "package:movie_night_tcc/src/lib_feature/home/home.view.dart" as feature;
 import "package:movie_night_tcc/src/lib_feature/home/movie.entity.dart"
     as feature;
-import "package:movie_night_tcc/src/lib_feature/profile/profile.view.dart"
+import "package:movie_night_tcc/src/lib_feature/profile/ui/profile.view.dart"
     as feature;
 import "package:movie_night_tcc/src/lib_mvvm/model/entity/movie.entity.dart"
     as mvvm;
@@ -68,8 +68,8 @@ final _goRouterFeatureBased = GoRouter(
 );
 
 class GoRouterNavigation implements INavigation {
-  static const appType = AppType.mvvmDefault;
-  // static const appType = AppType.featureBased;
+  // static const appType = AppType.mvvmDefault;
+  static const appType = AppType.featureBased;
 
   @override
   GoRouter get routerConfig => switch (appType) {
