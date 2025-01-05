@@ -116,3 +116,45 @@ class _DetailMovieBanner extends StatelessWidget {
     );
   }
 }
+
+class _StreamingIcon extends StatelessWidget {
+  final String imageUrl;
+  final Color? dotColor;
+
+  const _StreamingIcon({
+    required this.imageUrl,
+    this.dotColor,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      alignment: Alignment.topRight,
+      children: [
+        SizedBox.square(
+          dimension: 50,
+          child: UIImage(
+            imageUrl: imageUrl,
+          ),
+        ),
+        if (dotColor != null)
+          Positioned(
+            top: 4,
+            right: 4,
+            child: Container(
+              width: 10,
+              height: 10,
+              decoration: BoxDecoration(
+                color: dotColor,
+                shape: BoxShape.circle,
+                border: Border.all(
+                  color: Colors.black,
+                  width: 1,
+                ),
+              ),
+            ),
+          ),
+      ],
+    );
+  }
+}

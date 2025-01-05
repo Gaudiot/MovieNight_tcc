@@ -1,7 +1,7 @@
 import "package:go_router/go_router.dart";
 import "package:movie_night_tcc/src/base/enums/app_routes.enum.dart";
 import "package:movie_night_tcc/src/core/navigation/inavigation.dart";
-import "package:movie_night_tcc/src/lib_feature/details/details.view.dart"
+import "package:movie_night_tcc/src/lib_feature/details/ui/details.view.dart"
     as feature;
 import "package:movie_night_tcc/src/lib_feature/home/home.view.dart" as feature;
 import "package:movie_night_tcc/src/lib_feature/home/movie.entity.dart"

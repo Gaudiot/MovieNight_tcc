@@ -4,7 +4,7 @@ part of "movie.api.dart";
 class GetTrendingMoviesRequest {
   final int page;
 
-  GetTrendingMoviesRequest({required this.page});
+  const GetTrendingMoviesRequest({required this.page});
 
   Map<String, dynamic> toJson() => _$GetTrendingMoviesRequestToJson(this);
 }
@@ -17,7 +17,7 @@ class GetTrendingMoviesResponse {
   @JsonKey(name: "results", fromJson: _fromJsonIds)
   final List<int> ids;
 
-  GetTrendingMoviesResponse({
+  const GetTrendingMoviesResponse({
     required this.ids,
     required this.page,
     required this.totalPages,
@@ -48,7 +48,7 @@ class GetMoviesByTitleRequest {
   final String title;
   final int page;
 
-  GetMoviesByTitleRequest({
+  const GetMoviesByTitleRequest({
     required this.title,
     required this.page,
   });
@@ -64,7 +64,7 @@ class GetMoviesByTitleResponse {
   @JsonKey(name: "results", fromJson: _fromJsonIds)
   final List<int> ids;
 
-  GetMoviesByTitleResponse({
+  const GetMoviesByTitleResponse({
     required this.ids,
     required this.page,
     required this.totalPages,
@@ -94,7 +94,7 @@ class GetMoviesByTitleResponseMapper
 class GetMovieDetailsRequest {
   final int id;
 
-  GetMovieDetailsRequest({required this.id});
+  const GetMovieDetailsRequest({required this.id});
 
   Map<String, dynamic> toJson() => _$GetMovieDetailsRequestToJson(this);
 }
@@ -117,7 +117,7 @@ class GetMovieDetailsResponse {
   @JsonKey(name: "vote_average")
   final double rating;
 
-  GetMovieDetailsResponse({
+  const GetMovieDetailsResponse({
     required this.id,
     required this.title,
     required this.synopsis,
@@ -175,4 +175,49 @@ class GetMovieDetailsResponseMapper
 
   @override
   Map<String, dynamic> toJson(GetMovieDetailsResponse data) => data.toJson();
+}
+
+@JsonSerializable(createFactory: false)
+class GetMovieStreamingsRequest {
+  final int id;
+
+  const GetMovieStreamingsRequest({required this.id});
+
+  Map<String, dynamic> toJson() => _$GetMovieStreamingsRequestToJson(this);
+}
+
+@JsonSerializable()
+class GetMovieStreamingsResponse {
+  final int id;
+  final Map<String, StreamingsList> results;
+
+  const GetMovieStreamingsResponse({
+    required this.id,
+    required this.results,
+  });
+
+  bool hasCountry(String country) => results.containsKey(country);
+
+  StreamingsList getCountry(String country) =>
+      results[country] ??
+      const StreamingsList(
+        flatrate: [],
+        buy: [],
+        rent: [],
+      );
+
+  Map<String, dynamic> toJson() => _$GetMovieStreamingsResponseToJson(this);
+
+  factory GetMovieStreamingsResponse.fromJson(Map<String, dynamic> json) =>
+      _$GetMovieStreamingsResponseFromJson(json);
+}
+
+class GetMovieStreamingsResponseMapper
+    implements JsonMapper<GetMovieStreamingsResponse> {
+  @override
+  GetMovieStreamingsResponse fromJson(Map<String, dynamic> json) =>
+      GetMovieStreamingsResponse.fromJson(json);
+
+  @override
+  Map<String, dynamic> toJson(GetMovieStreamingsResponse data) => data.toJson();
 }
