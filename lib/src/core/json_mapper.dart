@@ -22,6 +22,8 @@ class MapperRegistry {
         feature.GetTrendingMoviesResponseMapper(),
     feature.GetMovieDetailsResponse: feature.GetMovieDetailsResponseMapper(),
     feature.GetMoviesByTitleResponse: feature.GetMoviesByTitleResponseMapper(),
+    feature.GetMovieStreamingsResponse:
+        feature.GetMovieStreamingsResponseMapper(),
   };
 
   static void register<T>(JsonMapper<T> mapper) {

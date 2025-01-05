@@ -151,4 +151,19 @@ class DetailsStrings {
         AppLanguageEnum.ptBr => "Sinopse",
         AppLanguageEnum.enUs => "Synopsis",
       };
+
+  String get subtitles => switch (appLanguage) {
+        AppLanguageEnum.ptBr => "Legendas",
+        AppLanguageEnum.enUs => "Subtitles",
+      };
+
+  String get toRent => switch (appLanguage) {
+        AppLanguageEnum.ptBr => "Alugar",
+        AppLanguageEnum.enUs => "Rent",
+      };
+
+  String get toBuy => switch (appLanguage) {
+        AppLanguageEnum.ptBr => "Comprar",
+        AppLanguageEnum.enUs => "Buy",
+      };
 }
