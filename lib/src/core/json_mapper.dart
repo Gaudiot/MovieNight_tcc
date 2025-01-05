@@ -17,6 +17,7 @@ class MapperRegistry {
     mvvm.GetTrendingMoviesResponse: mvvm.GetTrendingMoviesResponseMapper(),
     mvvm.GetMovieDetailsResponse: mvvm.GetMovieDetailsResponseMapper(),
     mvvm.GetMoviesByTitleResponse: mvvm.GetMoviesByTitleResponseMapper(),
+    mvvm.GetMovieStreamingsResponse: mvvm.GetMovieStreamingsResponseMapper(),
     feature.MovieModel: feature.MovieModelMapper(),
     feature.GetTrendingMoviesResponse:
         feature.GetTrendingMoviesResponseMapper(),
