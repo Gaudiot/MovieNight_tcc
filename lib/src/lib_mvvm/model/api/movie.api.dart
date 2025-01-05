@@ -6,6 +6,7 @@ import "package:movie_night_tcc/src/core/network/inetwork.dart";
 import "package:movie_night_tcc/src/core/network/network_exception.dart";
 import "package:movie_night_tcc/src/core/result_type.dart";
 import "package:movie_night_tcc/src/lib_mvvm/model/entity/movie.entity.dart";
+import "package:movie_night_tcc/src/lib_mvvm/model/entity/streamings.entity.dart";
 
 part "movie.api.g.dart";
 part "movie_api.enum.dart";
@@ -50,6 +51,15 @@ class MovieApi {
       queryParameters: {
         "language": "pt-BR",
       },
+    );
+  }
+
+  Future<Result<GetMovieStreamingsResponse, NetworkException>>
+      getMovieStreamings({
+    required GetMovieStreamingsRequest request,
+  }) async {
+    return _network.get<GetMovieStreamingsResponse>(
+      path: "/movie/${request.id}/watch/providers",
     );
   }
 }
