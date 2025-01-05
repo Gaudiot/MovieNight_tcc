@@ -68,8 +68,8 @@ final _goRouterFeatureBased = GoRouter(
 );
 
 class GoRouterNavigation implements INavigation {
-  static const appType = AppType.mvvmDefault;
-  // static const appType = AppType.featureBased;
+  // static const appType = AppType.mvvmDefault;
+  static const appType = AppType.featureBased;
 
   @override
   GoRouter get routerConfig => switch (appType) {
