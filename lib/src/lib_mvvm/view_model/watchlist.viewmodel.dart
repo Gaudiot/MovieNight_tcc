@@ -64,7 +64,7 @@ class WatchlistViewmodel extends BaseViewModel {
       return includesGenre && includesTitle;
     }).toList();
 
-    filteredMovies.sort((a, b) => a.runtime.compareTo(b.runtime));
+    filteredMovies.sort((a, b) => b.rating.compareTo(a.rating));
 
     _state.updateMovies = filteredMovies;
 
